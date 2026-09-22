@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="720" viewBox="0 0 1600 720">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#020304"/><stop offset=".55" stop-color="#0b070a"/><stop offset="1" stop-color="#180207"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#ff2638" stop-opacity=".28"/><stop offset="1" stop-color="#ff2638" stop-opacity="0"/></radialGradient>
+<linearGradient id="edge"><stop stop-color="#ff1c31" stop-opacity="0"/><stop offset=".5" stop-color="#ff5360"/><stop offset="1" stop-color="#ff1c31" stop-opacity="0"/></linearGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+<filter id="shadow"><feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#000" flood-opacity=".85"/></filter>
+<clipPath id="p"><rect x="-112" y="-228" width="224" height="456" rx="30"/></clipPath>
+</defs>
+
+<rect width="1600" height="720" rx="30" fill="url(#bg)"/>
+<ellipse cx="800" cy="350" rx="560" ry="290" fill="url(#glow)" filter="url(#blur)"/>
+
+<g stroke="#ff2438" stroke-opacity=".11">
+<path d="M70 610H1530M150 650H1450M250 690H1350"/>
+<path d="M380 720L740 445M540 720L760 445M700 720L780 445M860 720L800 445M1020 720L820 445M1180 720L840 445"/>
+</g>
+
+<!-- orbit system -->
+<g transform="translate(800 355)" fill="none">
+<ellipse rx="430" ry="150" stroke="#ff2438" stroke-opacity=".18" stroke-width="2">
+<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="22s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse rx="350" ry="118" stroke="#ff5b68" stroke-opacity=".15">
+<animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="17s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse rx="270" ry="88" stroke="#ff2438" stroke-opacity=".20">
+<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="12s" repeatCount="indefinite"/>
+</ellipse>
+<circle cx="430" cy="0" r="6" fill="#ff2438">
+<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="22s" repeatCount="indefinite"/>
+</circle>
+<circle cx="350" cy="0" r="4" fill="#fff">
+<animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="17s" repeatCount="indefinite"/>
+</circle>
+</g>
+
+<!-- left device -->
+<g transform="translate(365 365) rotate(-12)" filter="url(#shadow)">
+<rect x="-124" y="-248" width="248" height="496" rx="38" fill="#030405" stroke="#ff2438" stroke-opacity=".55" stroke-width="2.5"/>
+<rect x="-115" y="-239" width="230" height="478" rx="31" fill="#08090c" stroke="#fff" stroke-opacity=".08"/>
+<image x="-111" y="-234" width="222" height="468" href="https://raw.githubusercontent.com/AtawurRahmanTanvir/Mail-Factory/main/docs/assets/screens/dashboard.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#p)"/>
+<rect x="-96" y="-216" width="192" height="2" fill="url(#edge)">
+<animate attributeName="y" values="-216;198;-216" dur="5s" repeatCount="indefinite"/>
+</rect>
+<text x="-117" y="286" fill="#ff5360" font-family="monospace" font-size="10" letter-spacing="3">01 / DASHBOARD</text>
+</g>
+
+<!-- center device -->
+<g transform="translate(800 365)" filter="url(#shadow)">
+<rect x="-144" y="-282" width="288" height="564" rx="45" fill="#020304" stroke="#ff2438" stroke-opacity=".92" stroke-width="3"/>
+<rect x="-133" y="-271" width="266" height="542" rx="36" fill="#08090c" stroke="#fff" stroke-opacity=".10"/>
+<image x="-129" y="-267" width="258" height="534" href="https://raw.githubusercontent.com/AtawurRahmanTanvir/Mail-Factory/main/docs/assets/screens/generator.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#p)"/>
+<rect x="-110" y="-245" width="220" height="2" fill="url(#edge)">
+<animate attributeName="y" values="-245;225;-245" dur="4.2s" repeatCount="indefinite"/>
+</rect>
+<rect x="-50" y="-253" width="100" height="12" rx="6" fill="#000" opacity=".85"/>
+<circle cy="-247" r="3" fill="#ff2438"><animate attributeName="opacity" values=".25;1;.25" dur="1.6s" repeatCount="indefinite"/></circle>
+<text x="-136" y="316" fill="#fff" font-family="monospace" font-size="11" font-weight="bold" letter-spacing="3">03 / GENERATOR — CORE</text>
+</g>
+
+<!-- right device -->
+<g transform="translate(1235 365) rotate(12)" filter="url(#shadow)">
+<rect x="-124" y="-248" width="248" height="496" rx="38" fill="#030405" stroke="#ff2438" stroke-opacity=".50" stroke-width="2.5"/>
+<rect x="-115" y="-239" width="230" height="478" rx="31" fill="#08090c" stroke="#fff" stroke-opacity=".08"/>
+<image x="-111" y="-234" width="222" height="468" href="https://raw.githubusercontent.com/AtawurRahmanTanvir/Mail-Factory/main/docs/assets/screens/library.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#p)"/>
+<rect x="-96" y="-216" width="192" height="2" fill="url(#edge)">
+<animate attributeName="y" values="198;-216;198" dur="5.3s" repeatCount="indefinite"/>
+</rect>
+<text x="-117" y="286" fill="#ff5360" font-family="monospace" font-size="10" letter-spacing="3">04 / LIBRARY</text>
+</g>
+
+<!-- floating UI cards -->
+<g transform="translate(150 86) rotate(-4)">
+<rect width="310" height="110" rx="20" fill="#ffffff" fill-opacity=".045" stroke="#fff" stroke-opacity=".10"/>
+<text x="20" y="29" fill="#7f828b" font-family="monospace" font-size="9" letter-spacing="2.5">SYSTEM / STATUS</text>
+<text x="20" y="66" fill="#fff" font-family="Arial" font-size="22" font-weight="900">ONLINE</text>
+<circle cx="280" cy="60" r="7" fill="#36d17c"><animate attributeName="opacity" values=".25;1;.25" dur="1.7s" repeatCount="indefinite"/></circle>
+<path d="M20 88H288" stroke="#ff2438" stroke-opacity=".25"/>
+</g>
+
+<g transform="translate(1140 92) rotate(4)">
+<rect width="310" height="110" rx="20" fill="#ffffff" fill-opacity=".045" stroke="#ff2438" stroke-opacity=".22"/>
+<text x="20" y="29" fill="#7f828b" font-family="monospace" font-size="9" letter-spacing="2.5">CONTROL / MODE</text>
+<text x="20" y="66" fill="#fff" font-family="Arial" font-size="22" font-weight="900">GENERATE</text>
+<path d="M20 88H288" stroke="#ff2438" stroke-opacity=".25"/>
+<circle cx="30" cy="88" r="4" fill="#ff2438"><animate attributeName="cx" values="30;280;30" dur="3.1s" repeatCount="indefinite"/></circle>
+</g>
+
+<!-- scan beam + particles -->
+<rect x="120" y="118" width="1360" height="2" fill="url(#edge)" opacity=".72">
+<animate attributeName="y" values="118;622;118" dur="7s" repeatCount="indefinite"/>
+</rect>
+<g fill="#ff2438">
+<circle cx="620" cy="190" r="2"><animate attributeName="cy" values="190;560;190" dur="5.5s" repeatCount="indefinite"/></circle>
+<circle cx="1010" cy="220" r="2"><animate attributeName="cy" values="220;585;220" dur="6.1s" repeatCount="indefinite"/></circle>
+<circle cx="710" cy="260" r="2"><animate attributeName="cx" values="710;895;710" dur="4.1s" repeatCount="indefinite"/></circle>
+</g>
+
+<text x="800" y="668" text-anchor="middle" fill="#fff" fill-opacity=".45" font-family="monospace" font-size="10" letter-spacing="4">MAIL FACTORY / CINEMATIC APP SHOWCASE / SYSTEM ONLINE</text>
+</svg>

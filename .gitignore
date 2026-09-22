@@ -6,3 +6,7 @@ build/
 *.iml
 local.properties
 "@ | Add-Content .gitignore
+# IDE
+.idea/
+# Generated build directories
+**/build/

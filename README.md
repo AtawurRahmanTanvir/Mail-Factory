@@ -1,451 +1,175 @@
-from pathlib import Path
-import zipfile
+<div align="center">
 
-root = Path("/mnt/data/MailFactory_LIVE_3D_INTEGRATION")
-(root / "docs" / "readme").mkdir(parents=True, exist_ok=True)
+<a href="https://atawurrahmantanvir.github.io/Mail-Factory/">
+<img src="docs/assets/hero-banner.png" width="100%" alt="Mail Factory — Your Digital Freedom">
+</a>
 
-svg = r'''<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000">
-<defs>
-  <radialGradient id="r" cx="50%" cy="50%" r="70%">
-    <stop offset="0" stop-color="#e50914" stop-opacity=".22"/>
-    <stop offset=".45" stop-color="#e50914" stop-opacity=".07"/>
-    <stop offset="1" stop-color="#000" stop-opacity="0"/>
-  </radialGradient>
-  <linearGradient id="line" x1="0" x2="1">
-    <stop stop-color="#ff2438" stop-opacity="0"/>
-    <stop offset=".5" stop-color="#ff2438" stop-opacity=".9"/>
-    <stop offset="1" stop-color="#ff2438" stop-opacity="0"/>
-  </linearGradient>
-  <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
-</defs>
+<br><br>
 
-<rect width="1800" height="1000" fill="#020304"/>
-<ellipse cx="900" cy="480" rx="760" ry="380" fill="url(#r)" filter="url(#blur)"/>
+# MAIL FACTORY
 
-<!-- perspective grid -->
-<g stroke="#ff2438" stroke-opacity=".10" fill="none">
-  <path d="M60 790H1740"/><path d="M160 845H1640"/><path d="M300 900H1500"/><path d="M480 950H1320"/>
-  <path d="M420 1000L790 550M590 1000L810 550M760 1000L830 550M930 1000L850 550M1100 1000L870 550M1270 1000L890 550M1440 1000L910 550"/>
-</g>
+### YOUR DIGITAL FREEDOM
 
-<!-- giant rings -->
-<g transform="translate(900 500)" fill="none">
-  <ellipse rx="600" ry="210" stroke="#ff2438" stroke-opacity=".15" stroke-width="2">
-    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="28s" repeatCount="indefinite"/>
-  </ellipse>
-  <ellipse rx="500" ry="170" stroke="#ff6a74" stroke-opacity=".10" stroke-width="1.5">
-    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="21s" repeatCount="indefinite"/>
-  </ellipse>
-  <ellipse rx="390" ry="135" stroke="#ff2438" stroke-opacity=".16">
-    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="16s" repeatCount="indefinite"/>
-  </ellipse>
-  <circle cx="600" cy="0" r="7" fill="#ff2438">
-    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="28s" repeatCount="indefinite"/>
-  </circle>
-  <circle cx="500" cy="0" r="4" fill="#fff">
-    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="21s" repeatCount="indefinite"/>
-  </circle>
-</g>
+**Generate emails. Create strong passwords. Manage & organize — all in one powerful app.**
 
-<!-- central glow -->
-<circle cx="900" cy="500" r="170" fill="#e50914" fill-opacity=".08" filter="url(#blur)"/>
-<circle cx="900" cy="500" r="125" fill="none" stroke="#ff2438" stroke-opacity=".20" stroke-width="2">
-  <animate attributeName="r" values="115;140;115" dur="4.4s" repeatCount="indefinite"/>
-</circle>
+<br>
 
-<!-- moving scan -->
-<rect x="180" y="230" width="1440" height="2" fill="url(#line)">
-  <animate attributeName="y" values="230;790;230" dur="7s" repeatCount="indefinite"/>
-</rect>
+<a href="https://atawurrahmantanvir.github.io/Mail-Factory/">
+<img src="https://img.shields.io/badge/OPEN%20LIVE%203D%20EXPERIENCE-E50914?style=for-the-badge&labelColor=050607" alt="Open live 3D experience">
+</a>
+&nbsp;
+<a href="https://github.com/AtawurRahmanTanvir/Mail-Factory">
+<img src="https://img.shields.io/badge/VIEW%20SOURCE-111318?style=for-the-badge&logo=github&logoColor=FFFFFF" alt="View source">
+</a>
 
-<!-- particles -->
-<g fill="#ff2438">
-  <circle cx="380" cy="310" r="2"><animate attributeName="cy" values="310;700;310" dur="5s" repeatCount="indefinite"/></circle>
-  <circle cx="1440" cy="360" r="2"><animate attributeName="cy" values="360;730;360" dur="6s" repeatCount="indefinite"/></circle>
-  <circle cx="610" cy="210" r="1.5"><animate attributeName="cx" values="610;1190;610" dur="5.4s" repeatCount="indefinite"/></circle>
-  <circle cx="1190" cy="740" r="1.5"><animate attributeName="cx" values="1190;610;1190" dur="5.9s" repeatCount="indefinite"/></circle>
-</g>
+</div>
 
-<text x="900" y="885" text-anchor="middle"
- fill="#fff" fill-opacity=".28" font-family="JetBrains Mono,monospace"
- font-size="11" letter-spacing="5">LIVE APP RUNTIME / 3D PRESENTATION LAYER</text>
-</svg>'''
+---
 
-(root / "docs" / "readme" / "3d-atmosphere.svg").write_text(svg, encoding="utf-8")
+<div align="center">
 
-index = r'''<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mail Factory — Live 3D Experience</title>
-<meta name="description" content="Mail Factory cinematic live product experience.">
-<style>
-:root{
-  --bg:#020304;
-  --panel:rgba(7,8,11,.70);
-  --line:rgba(255,255,255,.10);
-  --red:#e50914;
-  --red2:#ff2438;
-  --muted:#8e9199;
-  --text:#f5f5f6;
-  --shadow:0 35px 90px rgba(0,0,0,.72);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--bg)}
-body{
-  margin:0;
-  color:var(--text);
-  background:
-    radial-gradient(900px 600px at 50% 6%,rgba(229,9,20,.09),transparent 65%),
-    var(--bg);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  overflow-x:hidden;
-}
-button{font:inherit}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1400px,92vw);margin:auto}
-.top{
-  position:relative;
-  z-index:10;
-  padding:26px 0 10px;
-  text-align:center;
-}
-.eyebrow{
-  font:700 10px/1.2 "JetBrains Mono",ui-monospace,monospace;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:#8f9299;
-}
-h1{
-  margin:12px 0 8px;
-  font-size:clamp(42px,7vw,82px);
-  line-height:.9;
-  letter-spacing:-.055em;
-}
-h1 span{color:var(--red)}
-.sub{color:#b5b7bd;font-size:15px}
-.hero{
-  margin-top:26px;
-  border:1px solid var(--line);
-  border-radius:28px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  background:#050607;
-}
-.hero img{display:block;width:100%;height:auto}
-.cta-row{
-  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0 60px;
-}
-.cta{
-  border:1px solid rgba(229,9,20,.55);
-  background:linear-gradient(180deg,#19070a,#090405);
-  color:#fff;padding:12px 18px;border-radius:999px;
-  font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  transition:.25s ease;
-}
-.cta:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(229,9,20,.18)}
-.stage{
-  position:relative;
-  min-height:900px;
-  margin:0 -4vw;
-  overflow:hidden;
-  isolation:isolate;
-}
-.atmosphere{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:cover;
-  opacity:.98;
-  z-index:0;
-}
-.noise{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.42) 100%);
-}
-.stage-head{
-  position:relative;z-index:4;text-align:center;padding-top:44px;
-}
-.stage-head h2{
-  margin:0;font-size:clamp(28px,4vw,48px);letter-spacing:-.04em;
-}
-.stage-head p{margin:10px auto 0;color:var(--muted);font-size:13px}
-.rig{
-  position:relative;z-index:3;
-  height:690px;
-  width:min(1260px,92vw);
-  margin:22px auto 0;
-  perspective:1800px;
-}
-.device{
-  position:absolute;
-  top:78px; left:50%;
-  width:310px;height:650px;
-  transform:translateX(-50%) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg)) translateZ(80px);
-  transition:transform .35s cubic-bezier(.2,.7,.2,1);
-  filter:drop-shadow(0 38px 60px rgba(0,0,0,.75));
-  z-index:5;
-}
-.device.side{width:240px;height:535px;top:136px;z-index:3;opacity:.88}
-.device.left{left:22%;transform:translateX(-50%) rotateY(-18deg) rotateX(4deg) rotateZ(-5deg) translateZ(0)}
-.device.right{left:78%;transform:translateX(-50%) rotateY(18deg) rotateX(4deg) rotateZ(5deg) translateZ(0)}
-.device-frame{
-  position:absolute;inset:0;border-radius:44px;
-  padding:9px;
-  background:linear-gradient(135deg,#3b3d42,#08090b 18%,#15171b 82%,#2c2f33);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 0 0 1px rgba(229,9,20,.35),0 0 45px rgba(229,9,20,.16);
-}
-.device.side .device-frame{border-radius:36px}
-.screen{
-  position:relative;width:100%;height:100%;
-  border-radius:36px;overflow:hidden;background:#000;
-  border:1px solid rgba(255,255,255,.07);
-}
-.device.side .screen{border-radius:29px}
-.screen iframe{
-  position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;
-}
-.scan{
-  position:absolute;left:8%;right:8%;height:2px;top:10%;
-  background:linear-gradient(90deg,transparent,#ff3a4b,transparent);
-  box-shadow:0 0 12px rgba(255,36,56,.8);
-  z-index:4;pointer-events:none;
-  animation:scan 4.8s ease-in-out infinite;
-}
-@keyframes scan{0%{top:9%;opacity:0}12%{opacity:1}52%{top:88%;opacity:1}62%{opacity:0}100%{top:88%;opacity:0}}
-.hud{
-  position:absolute;z-index:6;left:50%;bottom:18px;transform:translateX(-50%);
-  padding:9px 13px;border:1px solid rgba(229,9,20,.28);
-  background:rgba(3,4,6,.70);backdrop-filter:blur(16px);
-  border-radius:999px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.16em;
-  color:#ff6170;white-space:nowrap;
-}
-.controls{
-  position:relative;z-index:5;
-  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
-  margin-top:-4px;
-}
-.screen-btn{
-  border:1px solid rgba(255,255,255,.09);
-  background:rgba(7,8,11,.72);color:#c8cacf;
-  padding:10px 13px;border-radius:999px;cursor:pointer;
-  transition:.2s ease;font-size:11px;font-weight:800;
-}
-.screen-btn:hover,.screen-btn.active{
-  color:#fff;border-color:rgba(229,9,20,.52);
-  background:rgba(229,9,20,.10);box-shadow:0 8px 28px rgba(229,9,20,.12);
-}
-.section{
-  padding:90px 0;border-top:1px solid rgba(255,255,255,.06);
-}
-.section h2{font-size:clamp(30px,4vw,54px);letter-spacing:-.05em;margin:0 0 12px}
-.section p{color:#999ca5;max-width:760px;line-height:1.7}
-.gallery{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:14px;align-items:end;margin-top:35px;
-}
-.card{
-  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
-  border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:12px;
-  transition:.3s ease;cursor:pointer;
-}
-.card:hover{transform:translateY(-8px);border-color:rgba(229,9,20,.35);box-shadow:0 20px 55px rgba(0,0,0,.35)}
-.card img{display:block;width:100%;border-radius:13px}
-.card small{display:block;margin-top:10px;color:#bfc1c6;font:700 10px/1.2 "JetBrains Mono",monospace;letter-spacing:.08em}
-footer{padding:55px 0 80px;text-align:center;color:#62656c;font-size:12px}
-@media(max-width:1000px){
-  .gallery{grid-template-columns:repeat(3,1fr)}
-  .device.side{display:none}
-}
-@media(max-width:700px){
-  .stage{min-height:760px}
-  .rig{height:565px}
-  .device{width:270px;height:565px;top:72px}
-  .gallery{grid-template-columns:repeat(2,1fr)}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
-}
-</style>
-</head>
-<body>
+## THE APP
 
-<header class="wrap top">
-  <div class="eyebrow">MAIL FACTORY / LIVE PRODUCT EXPERIENCE</div>
-  <h1>MAIL<span>FACTORY</span></h1>
-  <div class="sub">A living interface — not a static mockup.</div>
+**One application. Six focused surfaces.**
 
-  <div class="hero">
-    <img src="assets/hero-banner.png" alt="Mail Factory — Your Digital Freedom">
-  </div>
+</div>
 
-  <div class="cta-row">
-    <a class="cta" href="#live">Enter Live 3D</a>
-    <a class="cta" href="../">Back to Repository</a>
-  </div>
-</header>
+<br>
 
-<main id="live">
-  <section class="stage">
-    <img class="atmosphere" src="readme/3d-atmosphere.svg" alt="" aria-hidden="true">
-    <div class="noise"></div>
+<div align="center">
 
-    <div class="stage-head">
-      <div class="eyebrow">LIVE HTML RUNTIME</div>
-      <h2>The Factory, Alive.</h2>
-      <p>The real Mail Factory HTML is rendered inside the 3D presentation layer.</p>
-    </div>
+<table border="0">
+<tr>
+<td align="center"><img src="docs/assets/screens/dashboard.png" width="125" alt="Dashboard"><br><sub><strong>DASHBOARD</strong></sub></td>
+<td align="center"><img src="docs/assets/screens/engine.png" width="125" alt="Engine"><br><sub><strong>ENGINE</strong></sub></td>
+<td align="center"><img src="docs/assets/screens/generator.png" width="125" alt="Generator"><br><sub><strong>GENERATOR</strong></sub></td>
+<td align="center"><img src="docs/assets/screens/library.png" width="125" alt="Library"><br><sub><strong>LIBRARY</strong></sub></td>
+<td align="center"><img src="docs/assets/screens/one-touch.png" width="125" alt="One Touch"><br><sub><strong>ONE TOUCH</strong></sub></td>
+<td align="center"><img src="docs/assets/screens/settings.png" width="125" alt="Settings"><br><sub><strong>SETTINGS</strong></sub></td>
+</tr>
+</table>
 
-    <div class="rig" id="rig">
-      <div class="device side left" data-screen="dashboard">
-        <div class="device-frame"><div class="screen">
-          <iframe id="frame-left" src="source/mail-factory.html" title="Live Mail Factory Dashboard"></iframe>
-          <div class="scan"></div>
-        </div></div>
-      </div>
+<sub>Application screens shown exactly from the repository assets.</sub>
 
-      <div class="device" id="centerDevice" data-screen="generator">
-        <div class="device-frame"><div class="screen">
-          <iframe id="frame-center" src="source/mail-factory.html" title="Live Mail Factory Generator"></iframe>
-          <div class="scan"></div>
-        </div></div>
-        <div class="hud">LIVE / GENERATOR / HTML</div>
-      </div>
+</div>
 
-      <div class="device side right" data-screen="library">
-        <div class="device-frame"><div class="screen">
-          <iframe id="frame-right" src="source/mail-factory.html" title="Live Mail Factory Library"></iframe>
-          <div class="scan"></div>
-        </div></div>
-      </div>
-    </div>
+---
 
-    <div class="controls" id="controls">
-      <button class="screen-btn" data-target="dashboard">DASHBOARD</button>
-      <button class="screen-btn" data-target="engine">ENGINE</button>
-      <button class="screen-btn active" data-target="generator">GENERATOR</button>
-      <button class="screen-btn" data-target="library">LIBRARY</button>
-      <button class="screen-btn" data-target="onetouch">ONE TOUCH</button>
-      <button class="screen-btn" data-target="settings">SETTINGS</button>
-    </div>
-  </section>
+## EXPLORE THE FACTORY
 
-  <section class="wrap section">
-    <h2>One app. Multiple surfaces.</h2>
-    <p>
-      The presentation keeps your existing application screenshots exactly as they are.
-      The live showcase is a separate layer: the real HTML application is loaded into
-      device frames while the animated SVG atmosphere provides depth behind it.
-    </p>
+<table width="100%" border="0">
+<tr>
+<td width="33%" valign="top">
 
-    <div class="gallery">
-      <div class="card"><img src="assets/screens/dashboard.png" alt="Dashboard"><small>01 / DASHBOARD</small></div>
-      <div class="card"><img src="assets/screens/engine.png" alt="Engine"><small>02 / ENGINE</small></div>
-      <div class="card"><img src="assets/screens/generator.png" alt="Generator"><small>03 / GENERATOR</small></div>
-      <div class="card"><img src="assets/screens/library.png" alt="Library"><small>04 / LIBRARY</small></div>
-      <div class="card"><img src="assets/screens/one-touch.png" alt="One Touch"><small>05 / ONE TOUCH</small></div>
-      <div class="card"><img src="assets/screens/settings.png" alt="Settings"><small>06 / SETTINGS</small></div>
-    </div>
-  </section>
-</main>
+### GENERATE
 
-<footer>
-  MAIL FACTORY · LIVE HTML + 3D PRESENTATION · LOCAL-FIRST
-</footer>
+Create individual or batch results from a focused generation workflow.
 
-<script>
-const screens = ["dashboard","engine","generator","library","onetouch","settings"];
+</td>
+<td width="33%" valign="top">
 
-function showInside(frame, name){
-  try{
-    const w = frame.contentWindow;
-    if(w && typeof w.showScreen === "function"){
-      w.showScreen(name);
-    }
-  }catch(err){}
-}
+### ORGANIZE
 
-function bindFrame(frame, initial){
-  frame.addEventListener("load", () => {
-    setTimeout(() => showInside(frame, initial), 120);
-  });
-}
+Use the Library to search, sort and manage generated entries.
 
-const left = document.getElementById("frame-left");
-const center = document.getElementById("frame-center");
-const right = document.getElementById("frame-right");
+</td>
+<td width="33%" valign="top">
 
-bindFrame(left, "dashboard");
-bindFrame(center, "generator");
-bindFrame(right, "library");
+### CONTROL
 
-function setCenter(name){
-  showInside(center, name);
-  document.querySelectorAll(".screen-btn").forEach(b =>
-    b.classList.toggle("active", b.dataset.target === name)
-  );
-}
+Move between Engine, One Touch and Settings without leaving the workspace.
 
-document.querySelectorAll(".screen-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const name = btn.dataset.target;
-    setCenter(name);
-    // A little synchronized choreography around the live center screen.
-    const sideTargets = {
-      dashboard:"library",
-      engine:"dashboard",
-      generator:"library",
-      library:"dashboard",
-      onetouch:"generator",
-      settings:"library"
-    };
-    showInside(left, sideTargets[name] || "dashboard");
-    showInside(right, name === "library" ? "settings" : "library");
-  });
-});
+</td>
+</tr>
+</table>
 
-// 3D pointer camera: the HTML app stays real; only its presentation frame moves.
-const stage = document.querySelector(".stage");
-const centerDevice = document.getElementById("centerDevice");
-stage.addEventListener("pointermove",(e)=>{
-  const r = stage.getBoundingClientRect();
-  const x = (e.clientX-r.left)/r.width-.5;
-  const y = (e.clientY-r.top)/r.height-.5;
-  centerDevice.style.setProperty("--ry",(x*12).toFixed(2)+"deg");
-  centerDevice.style.setProperty("--rx",(-y*8).toFixed(2)+"deg");
-});
-stage.addEventListener("pointerleave",()=>{
-  centerDevice.style.setProperty("--ry","0deg");
-  centerDevice.style.setProperty("--rx","0deg");
-});
+---
 
-// Scroll depth: subtly scale/rotate the presentation as the visitor enters/exits it.
-const rig = document.getElementById("rig");
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    const p = entry.intersectionRatio;
-    const scale = .93 + p*.07;
-    rig.style.transform = `scale(${scale}) translateY(${(1-p)*35}px)`;
-  });
-},{threshold:[0,.15,.35,.6,.8,1]});
-observer.observe(rig);
+<div align="center">
 
-// Auto choreography: cycles side screens while the central live app stays interactive.
-let autoIndex = 0;
-setInterval(()=>{
-  autoIndex=(autoIndex+1)%screens.length;
-  showInside(left, screens[autoIndex]);
-  showInside(right, screens[(autoIndex+2)%screens.length]);
-}, 4200);
-</script>
-</body>
-</html>'''
+## LIVE 3D EXPERIENCE
 
-(root / "docs" / "index.html").write_text(index, encoding="utf-8")
+<a href="https://atawurrahmantanvir.github.io/Mail-Factory/">
+<img src="https://img.shields.io/badge/▶%20ENTER%20THE%20LIVE%20FACTORY-E50914?style=for-the-badge&labelColor=050607" alt="Enter the live factory">
+</a>
 
-zip_path = Path("/mnt/data/MailFactory_LIVE_HTML_3D_FINAL.zip")
-with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-    for p in root.rglob("*"):
-        if p.is_file():
-            z.write(p, p.relative_to(root.parent))
+<br><br>
 
-print(zip_path)
+<sub><code>docs/index.html</code> is the interactive presentation layer.</sub>
+
+</div>
+
+The README intentionally does **not** duplicate the hero banner or replace any application screenshots. The full visual/interactive experience belongs to the live HTML showcase.
+
+---
+
+## GENERATOR
+
+**Single**
+
+Focused controls for creating one generated result with direct copy actions.
+
+**Batch**
+
+Create multiple results in one run with configurable generation values and individual copy controls.
+
+---
+
+## LIBRARY
+
+A dedicated workspace for the generated collection:
+
+`SEARCH` · `SORT` · `COPY` · `STAR` · `VERIFY` · `RENAME` · `DELETE`
+
+---
+
+## INTERFACE LANGUAGE
+
+`BLACK` · `CRIMSON` · `GLOW` · `PRECISION` · `MOTION`
+
+The application uses a dark utility-oriented visual system with crimson accents, glowing edges and compact information density.
+
+---
+
+## PROJECT STRUCTURE
+
+```text
+Mail-Factory/
+│
+├── app/
+│
+├── docs/
+│   ├── index.html
+│   ├── assets/
+│   │   ├── hero-banner.png
+│   │   ├── logo.png
+│   │   └── screens/
+│   │       ├── dashboard.png
+│   │       ├── engine.png
+│   │       ├── generator.png
+│   │       ├── library.png
+│   │       ├── one-touch.png
+│   │       └── settings.png
+│   │
+│   └── source/
+│       └── mail-factory.html
+│
+├── README.md
+└── .gitignore
+```
+
+---
+
+<div align="center">
+
+<a href="https://atawurrahmantanvir.github.io/Mail-Factory/">
+<img src="https://img.shields.io/badge/LAUNCH%20MAIL%20FACTORY-E50914?style=for-the-badge&labelColor=050607" alt="Launch Mail Factory">
+</a>
+
+<br><br>
+
+**MAIL FACTORY**
+
+`GENERATE` · `ORGANIZE` · `CONTROL`
+
+</div>

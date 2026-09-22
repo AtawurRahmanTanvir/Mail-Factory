@@ -1,340 +1,366 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#050507">
-  <meta name="description" content="Mail Factory — cinematic local-first Android utility showcase.">
-  <title>Mail Factory — Digital Freedom</title>
-  <style>
-    :root{
-      --bg:#050507;
-      --bg2:#08090d;
-      --panel:rgba(14,15,20,.72);
-      --panel-2:rgba(20,21,27,.56);
-      --line:rgba(255,255,255,.10);
-      --line-strong:rgba(255,255,255,.18);
-      --text:#f7f7f8;
-      --muted:#92959d;
-      --red:#e50914;
-      --red2:#ff3945;
-      --red-soft:rgba(229,9,20,.20);
-      --glow:rgba(229,9,20,.38);
-      --shadow:0 40px 120px rgba(0,0,0,.55);
-      --ease:cubic-bezier(.22,1,.36,1);
-      --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
-      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;background:var(--bg)}
-    body{margin:0;background:
-      radial-gradient(900px 500px at 50% -10%,rgba(229,9,20,.16),transparent 60%),
-      radial-gradient(700px 460px at 90% 32%,rgba(125,15,25,.12),transparent 62%),
-      linear-gradient(180deg,#040507 0%,#050507 42%,#030406 100%);
-      color:var(--text);font-family:var(--sans);overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    button{font:inherit;color:inherit}
-    img{max-width:100%;display:block}
-    .page{position:relative;isolation:isolate}
-    .page::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:6px 6px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.35),transparent 80%)}
-    .noise{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
-
-    /* ---------- ambient canvas ---------- */
-    #fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:.9}
-
-    /* ---------- navigation ---------- */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:20;padding:14px 16px;transition:transform .5s var(--ease),background .5s var(--ease)}
-    .nav.scrolled{background:rgba(3,4,6,.62);backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--line)}
-    .nav-inner{max-width:1240px;margin:0 auto;height:58px;border:1px solid rgba(255,255,255,.08);background:rgba(9,10,14,.48);backdrop-filter:blur(18px);border-radius:18px;padding:0 12px 0 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .brand img{width:32px;height:32px;object-fit:contain;border-radius:9px;box-shadow:0 0 24px rgba(229,9,20,.18)}
-    .brand-text{font-weight:900;letter-spacing:.04em;white-space:nowrap}.brand-text span{color:var(--red)}
-    .nav-links{display:flex;align-items:center;gap:6px}.nav-links a{font-size:12px;color:#bbbfc7;padding:9px 11px;border-radius:10px;transition:.25s}.nav-links a:hover{background:rgba(255,255,255,.06);color:#fff}
-    .nav-cta{display:flex;align-items:center;gap:8px}.pill{border:1px solid rgba(229,9,20,.42);background:rgba(229,9,20,.08);color:#fff;border-radius:999px;padding:9px 12px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 0 22px rgba(229,9,20,.12)}
-
-    /* ---------- layout ---------- */
-    .section{max-width:1240px;margin:0 auto;padding:0 24px}
-    .hero{min-height:100svh;padding-top:108px;display:flex;align-items:center}
-    .hero-grid{width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid rgba(229,9,20,.34);background:rgba(229,9,20,.07);border-radius:999px;color:#ffb5ba;font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 0 34px rgba(229,9,20,.10)}
-    .eyebrow i{display:block;width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 16px var(--red);animation:pulse 1.8s ease-in-out infinite}
-    .hero h1{font-size:clamp(54px,8.5vw,118px);line-height:.84;letter-spacing:-.07em;margin:22px 0 22px;font-weight:950}
-    .hero h1 .red{color:var(--red);text-shadow:0 0 46px rgba(229,9,20,.22)}
-    .hero-copy{max-width:680px;color:#b7bac1;font-size:clamp(15px,1.7vw,19px);line-height:1.65;margin:0 0 28px}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:13px 16px;border:1px solid var(--line);background:rgba(255,255,255,.035);font-size:12px;font-weight:850;letter-spacing:.04em;transition:transform .25s var(--ease),box-shadow .25s,border-color .25s,background .25s}.btn:hover{transform:translateY(-2px);border-color:var(--line-strong);box-shadow:0 12px 38px rgba(0,0,0,.32)}.btn.primary{border-color:rgba(229,9,20,.6);background:linear-gradient(180deg,rgba(229,9,20,.24),rgba(229,9,20,.08));box-shadow:0 0 32px rgba(229,9,20,.12)}.btn.primary:hover{box-shadow:0 0 42px rgba(229,9,20,.20)}
-    .hero-meta{display:flex;gap:22px;margin-top:32px;flex-wrap:wrap}.meta{display:flex;flex-direction:column;gap:5px}.meta b{font-size:12px}.meta span{font:10px var(--mono);color:#757983;letter-spacing:.06em}
-
-    /* ---------- hero 3D stage ---------- */
-    .stage{position:relative;min-height:610px;display:grid;place-items:center;perspective:1800px}
-    .orb{position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,78,90,.45),rgba(229,9,20,.14) 42%,transparent 68%);filter:blur(14px);transform:translateZ(-100px);animation:breathe 6s ease-in-out infinite;pointer-events:none}
-    .orbit{position:absolute;width:520px;height:520px;border:1px solid rgba(229,9,20,.20);border-radius:50%;transform:rotateX(67deg) rotateZ(18deg);box-shadow:0 0 70px rgba(229,9,20,.08),inset 0 0 70px rgba(229,9,20,.04);animation:spin 17s linear infinite}.orbit::before,.orbit::after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 22px rgba(229,9,20,.9)}.orbit::before{left:14%;top:27%}.orbit::after{right:12%;bottom:23%}
-    .device-wrap{position:relative;width:min(370px,78%);transform-style:preserve-3d;transition:transform .12s linear}
-    .device-shadow{position:absolute;inset:8% -8% -9%;background:radial-gradient(ellipse,rgba(229,9,20,.30),transparent 68%);filter:blur(30px);transform:translateZ(-140px)}
-    .device{position:relative;border-radius:44px;padding:8px;background:linear-gradient(145deg,#c9cdd4 0%,#454951 13%,#090a0d 29%,#191b20 72%,#7d8189 100%);box-shadow:0 32px 90px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.24),inset 0 0 0 1px rgba(0,0,0,.55);transform:rotateZ(-7deg) rotateX(3deg) rotateY(-11deg);transform-style:preserve-3d}
-    .device::before{content:"";position:absolute;left:50%;top:10px;transform:translateX(-50%);width:90px;height:22px;border-radius:16px;background:#030406;z-index:5;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-    .screen{position:relative;aspect-ratio:9/19.4;border-radius:37px;overflow:hidden;background:#030406;border:1px solid rgba(255,255,255,.16)}
-    .screen img{width:100%;height:100%;object-fit:cover;object-position:top center}
-    .screen::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 18%,transparent 64%,rgba(0,0,0,.25));pointer-events:none}
-    .floating-tag{position:absolute;bottom:10%;left:-22%;transform:translateZ(80px);padding:12px 14px;border:1px solid rgba(229,9,20,.32);background:rgba(7,8,11,.75);backdrop-filter:blur(14px);border-radius:14px;box-shadow:0 18px 42px rgba(0,0,0,.4),0 0 30px rgba(229,9,20,.10)}.floating-tag strong{display:block;font-size:11px}.floating-tag span{display:block;font:9px var(--mono);color:#767981;margin-top:4px}
-
-    /* ---------- marquee ---------- */
-    .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:linear-gradient(90deg,rgba(229,9,20,.055),transparent 25%,transparent 75%,rgba(229,9,20,.055))}.track{display:flex;width:max-content;gap:50px;padding:14px 0;animation:marquee 28s linear infinite}.track span{font:800 10px var(--mono);letter-spacing:.2em;color:#81858d;white-space:nowrap}.track b{color:var(--red)}
-
-    /* ---------- showcase section ---------- */
-    .showcase{padding-top:150px}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:34px}.kicker{font:800 10px var(--mono);letter-spacing:.18em;color:var(--red);text-transform:uppercase}.section-head h2{font-size:clamp(36px,5vw,74px);letter-spacing:-.055em;line-height:.95;margin:10px 0 0}.section-head p{max-width:440px;color:#838791;font-size:14px;line-height:1.7;margin:0}
-    .showcase-shell{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:stretch}
-    .tabs{border:1px solid var(--line);background:rgba(10,11,15,.62);backdrop-filter:blur(18px);border-radius:24px;padding:10px;position:sticky;top:94px;height:max-content}.tab{width:100%;padding:15px 13px;border:1px solid transparent;background:transparent;border-radius:15px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:11px;transition:.25s}.tab:hover{background:rgba(255,255,255,.035)}.tab.active{border-color:rgba(229,9,20,.38);background:linear-gradient(180deg,rgba(229,9,20,.13),rgba(229,9,20,.05));box-shadow:inset 0 0 0 1px rgba(229,9,20,.05),0 0 30px rgba(229,9,20,.08)}.tab-index{font:700 10px var(--mono);color:#5f626a}.tab.active .tab-index{color:#ff727a}.tab strong{font-size:12px}.tab small{display:block;color:#6d717a;font-size:9px;margin-top:3px}
-    .viewer{position:relative;border:1px solid var(--line);border-radius:28px;min-height:720px;overflow:hidden;background:linear-gradient(180deg,rgba(15,16,21,.84),rgba(5,6,8,.94));box-shadow:var(--shadow)}
-    .viewer::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 220px at 50% 0%,rgba(229,9,20,.14),transparent 70%);pointer-events:none}.viewer-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.58),transparent 84%);opacity:.22;pointer-events:none}
-    .viewer-top{position:absolute;left:18px;right:18px;top:16px;display:flex;justify-content:space-between;align-items:center;z-index:3}.viewer-label{font:800 9px var(--mono);letter-spacing:.14em;color:#858992}.viewer-status{display:inline-flex;align-items:center;gap:7px;font:700 9px var(--mono);color:#5ce18c}.viewer-status i{width:6px;height:6px;border-radius:50%;background:#41e27d;box-shadow:0 0 12px rgba(65,226,125,.9)}
-    .shot-stage{position:absolute;inset:70px 40px 35px;display:grid;place-items:center;perspective:1500px}.shot-card{position:relative;width:min(420px,72%);height:84%;padding:7px;border-radius:33px;background:linear-gradient(145deg,#9aa0aa,#1b1d22 24%,#050607 78%,#8a8f98);box-shadow:0 28px 72px rgba(0,0,0,.64),0 0 70px rgba(229,9,20,.10);transform:rotateX(3deg) rotateY(-10deg) rotateZ(4deg);transform-style:preserve-3d;transition:transform .8s var(--ease),opacity .45s}.shot-card::before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:76px;height:18px;border-radius:12px;background:#030406;z-index:3}.shot-screen{height:100%;border-radius:27px;overflow:hidden;background:#020305}.shot-screen img{width:100%;height:100%;object-fit:cover;object-position:top}
-    .viewer-caption{position:absolute;left:30px;right:30px;bottom:22px;display:flex;justify-content:space-between;align-items:end;gap:16px;z-index:3}.viewer-caption .title{font-size:24px;font-weight:900;letter-spacing:-.04em}.viewer-caption .desc{max-width:420px;color:#7c8089;font-size:11px;line-height:1.6}.counter{font:700 10px var(--mono);color:#a3a7b0}
-
-    /* ---------- banner story ---------- */
-    .banner-story{padding-top:150px}.banner-frame{position:relative;border-radius:32px;overflow:hidden;border:1px solid rgba(255,255,255,.13);box-shadow:0 40px 120px rgba(0,0,0,.58)}.banner-frame img{width:100%;height:auto}.banner-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.35));pointer-events:none}.banner-copy{margin:22px 0 0;display:flex;justify-content:space-between;gap:24px;align-items:end}.banner-copy h3{font-size:clamp(30px,4vw,54px);letter-spacing:-.055em;margin:0}.banner-copy p{max-width:460px;color:#7f838c;font-size:13px;line-height:1.7;margin:0}
-
-    /* ---------- system section ---------- */
-    .system{padding-top:150px}.system-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(17,18,24,.72),rgba(8,9,12,.78));box-shadow:var(--shadow);overflow:hidden}.panel-pad{padding:28px}.panel h3{margin:0 0 10px;font-size:22px;letter-spacing:-.03em}.panel p{margin:0;color:#7f838b;font-size:13px;line-height:1.7}.architecture{position:relative;min-height:490px}.nodes{position:relative;height:100%;min-height:430px;display:grid;place-items:center}.node{position:absolute;min-width:160px;padding:13px 14px;border:1px solid rgba(229,9,20,.26);border-radius:14px;background:rgba(5,6,8,.88);box-shadow:0 0 28px rgba(229,9,20,.08)}.node b{display:block;font-size:11px}.node span{display:block;color:#737780;font:9px var(--mono);margin-top:4px}.node.center{left:50%;top:50%;transform:translate(-50%,-50%);border-color:rgba(229,9,20,.6);box-shadow:0 0 50px rgba(229,9,20,.14)}.node.n1{left:10%;top:13%}.node.n2{right:8%;top:17%}.node.n3{left:12%;bottom:16%}.node.n4{right:9%;bottom:13%}.wire{position:absolute;inset:0;pointer-events:none}.wire line{stroke:rgba(229,9,20,.34);stroke-width:1.2;stroke-dasharray:5 7;animation:dash 4s linear infinite}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}.metric{padding:15px;border:1px solid rgba(255,255,255,.07);border-radius:15px;background:rgba(255,255,255,.025)}.metric strong{font-size:17px}.metric small{display:block;color:#666a73;font:9px var(--mono);margin-top:4px;text-transform:uppercase}
-
-    /* ---------- footer ---------- */
-    .footer{padding:150px 0 55px}.footer-card{position:relative;border:1px solid rgba(229,9,20,.25);border-radius:34px;overflow:hidden;padding:50px 30px 30px;text-align:center;background:radial-gradient(500px 260px at 50% 0%,rgba(229,9,20,.14),transparent 62%),linear-gradient(180deg,rgba(12,13,17,.72),rgba(6,7,9,.94));box-shadow:0 50px 120px rgba(0,0,0,.55)}.footer-card h2{font-size:clamp(42px,7vw,88px);letter-spacing:-.065em;line-height:.9;margin:0}.footer-card h2 span{color:var(--red)}.footer-card p{margin:20px auto 26px;max-width:560px;color:#777b85;font-size:13px;line-height:1.7}.footer-line{margin-top:44px;display:flex;justify-content:space-between;gap:14px;align-items:center;color:#5d6067;font:9px var(--mono);letter-spacing:.08em}.footer-line b{color:#9a9da4}
-
-    /* ---------- modal ---------- */
-    .modal{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.78);backdrop-filter:blur(18px);z-index:50;opacity:0;pointer-events:none;transition:opacity .35s}.modal.open{opacity:1;pointer-events:auto}.modal-card{width:min(1040px,94vw);max-height:90vh;border:1px solid var(--line-strong);border-radius:28px;background:#07080b;box-shadow:0 50px 130px rgba(0,0,0,.7);overflow:hidden;transform:translateY(18px) scale(.98);transition:transform .45s var(--ease);position:relative}.modal.open .modal-card{transform:translateY(0) scale(1)}.modal-card img{width:100%;height:78vh;object-fit:contain;background:#020305}.modal-close{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.54);cursor:pointer;font-size:17px;z-index:2}.modal-meta{display:flex;justify-content:space-between;gap:14px;padding:13px 16px;border-top:1px solid rgba(255,255,255,.08)}.modal-meta strong{font-size:11px}.modal-meta span{font:9px var(--mono);color:#676b74}
-
-    /* ---------- reveal ---------- */
-    .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}.reveal.in{opacity:1;transform:none}
-
-    /* ---------- responsive ---------- */
-    @media (max-width:980px){
-      .hero-grid,.system-grid{grid-template-columns:1fr}.stage{min-height:600px}.showcase-shell{grid-template-columns:1fr}.tabs{position:relative;top:auto;display:grid;grid-template-columns:repeat(3,1fr)}.tab{padding:12px}.tab small{display:none}.viewer{min-height:690px}
-    }
-    @media (max-width:720px){
-      .section{padding:0 16px}.nav{padding:10px}.nav-inner{height:52px}.nav-links{display:none}.nav-cta .pill{display:none}.hero{padding-top:92px}.hero-grid{gap:18px}.hero h1{font-size:clamp(54px,18vw,92px)}.stage{min-height:520px}.device-wrap{width:min(340px,83%)}.orbit{width:430px;height:430px}.showcase,.banner-story,.system{padding-top:100px}.section-head,.banner-copy{flex-direction:column;align-items:flex-start}.viewer{min-height:620px}.shot-stage{inset:65px 18px 88px}.shot-card{width:min(320px,82%);height:78%}.viewer-caption{left:18px;right:18px;bottom:16px}.viewer-caption .title{font-size:20px}.tabs{grid-template-columns:repeat(2,1fr)}.footer{padding-top:100px}.footer-card{padding:42px 20px 24px}.metrics{grid-template-columns:1fr}.node{min-width:130px}.node.n1{left:4%}.node.n2{right:4%}.node.n3{left:4%}.node.n4{right:4%}
-    }
-    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.track,.orbit,.orb,.device-wrap,.reveal{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
-
-    @keyframes pulse{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
-    @keyframes breathe{0%,100%{transform:translateZ(-100px) scale(1);opacity:.7}50%{transform:translateZ(-100px) scale(1.12);opacity:1}}
-    @keyframes spin{to{transform:rotateX(67deg) rotateZ(378deg)}}
-    @keyframes dash{to{stroke-dashoffset:-48}}
-    @keyframes marquee{to{transform:translateX(-50%)}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mail Factory — Live 3D Experience</title>
+<meta name="description" content="Mail Factory cinematic live product experience.">
+<style>
+:root{
+  --bg:#020304;
+  --panel:rgba(7,8,11,.70);
+  --line:rgba(255,255,255,.10);
+  --red:#e50914;
+  --red2:#ff2438;
+  --muted:#8e9199;
+  --text:#f5f5f6;
+  --shadow:0 35px 90px rgba(0,0,0,.72);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{
+  margin:0;
+  color:var(--text);
+  background:
+    radial-gradient(900px 600px at 50% 6%,rgba(229,9,20,.09),transparent 65%),
+    var(--bg);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+button{font:inherit}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1400px,92vw);margin:auto}
+.top{
+  position:relative;
+  z-index:10;
+  padding:26px 0 10px;
+  text-align:center;
+}
+.eyebrow{
+  font:700 10px/1.2 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:#8f9299;
+}
+h1{
+  margin:12px 0 8px;
+  font-size:clamp(42px,7vw,82px);
+  line-height:.9;
+  letter-spacing:-.055em;
+}
+h1 span{color:var(--red)}
+.sub{color:#b5b7bd;font-size:15px}
+.hero{
+  margin-top:26px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  background:#050607;
+}
+.hero img{display:block;width:100%;height:auto}
+.cta-row{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0 60px;
+}
+.cta{
+  border:1px solid rgba(229,9,20,.55);
+  background:linear-gradient(180deg,#19070a,#090405);
+  color:#fff;padding:12px 18px;border-radius:999px;
+  font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  transition:.25s ease;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(229,9,20,.18)}
+.stage{
+  position:relative;
+  min-height:900px;
+  margin:0 -4vw;
+  overflow:hidden;
+  isolation:isolate;
+}
+.atmosphere{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:.98;
+  z-index:0;
+}
+.noise{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.42) 100%);
+}
+.stage-head{
+  position:relative;z-index:4;text-align:center;padding-top:44px;
+}
+.stage-head h2{
+  margin:0;font-size:clamp(28px,4vw,48px);letter-spacing:-.04em;
+}
+.stage-head p{margin:10px auto 0;color:var(--muted);font-size:13px}
+.rig{
+  position:relative;z-index:3;
+  height:690px;
+  width:min(1260px,92vw);
+  margin:22px auto 0;
+  perspective:1800px;
+}
+.device{
+  position:absolute;
+  top:78px; left:50%;
+  width:310px;height:650px;
+  transform:translateX(-50%) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg)) translateZ(80px);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  filter:drop-shadow(0 38px 60px rgba(0,0,0,.75));
+  z-index:5;
+}
+.device.side{width:240px;height:535px;top:136px;z-index:3;opacity:.88}
+.device.left{left:22%;transform:translateX(-50%) rotateY(-18deg) rotateX(4deg) rotateZ(-5deg) translateZ(0)}
+.device.right{left:78%;transform:translateX(-50%) rotateY(18deg) rotateX(4deg) rotateZ(5deg) translateZ(0)}
+.device-frame{
+  position:absolute;inset:0;border-radius:44px;
+  padding:9px;
+  background:linear-gradient(135deg,#3b3d42,#08090b 18%,#15171b 82%,#2c2f33);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 0 0 1px rgba(229,9,20,.35),0 0 45px rgba(229,9,20,.16);
+}
+.device.side .device-frame{border-radius:36px}
+.screen{
+  position:relative;width:100%;height:100%;
+  border-radius:36px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,255,255,.07);
+}
+.device.side .screen{border-radius:29px}
+.screen iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;
+}
+.scan{
+  position:absolute;left:8%;right:8%;height:2px;top:10%;
+  background:linear-gradient(90deg,transparent,#ff3a4b,transparent);
+  box-shadow:0 0 12px rgba(255,36,56,.8);
+  z-index:4;pointer-events:none;
+  animation:scan 4.8s ease-in-out infinite;
+}
+@keyframes scan{0%{top:9%;opacity:0}12%{opacity:1}52%{top:88%;opacity:1}62%{opacity:0}100%{top:88%;opacity:0}}
+.hud{
+  position:absolute;z-index:6;left:50%;bottom:18px;transform:translateX(-50%);
+  padding:9px 13px;border:1px solid rgba(229,9,20,.28);
+  background:rgba(3,4,6,.70);backdrop-filter:blur(16px);
+  border-radius:999px;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.16em;
+  color:#ff6170;white-space:nowrap;
+}
+.controls{
+  position:relative;z-index:5;
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  margin-top:-4px;
+}
+.screen-btn{
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(7,8,11,.72);color:#c8cacf;
+  padding:10px 13px;border-radius:999px;cursor:pointer;
+  transition:.2s ease;font-size:11px;font-weight:800;
+}
+.screen-btn:hover,.screen-btn.active{
+  color:#fff;border-color:rgba(229,9,20,.52);
+  background:rgba(229,9,20,.10);box-shadow:0 8px 28px rgba(229,9,20,.12);
+}
+.section{
+  padding:90px 0;border-top:1px solid rgba(255,255,255,.06);
+}
+.section h2{font-size:clamp(30px,4vw,54px);letter-spacing:-.05em;margin:0 0 12px}
+.section p{color:#999ca5;max-width:760px;line-height:1.7}
+.gallery{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:14px;align-items:end;margin-top:35px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:12px;
+  transition:.3s ease;cursor:pointer;
+}
+.card:hover{transform:translateY(-8px);border-color:rgba(229,9,20,.35);box-shadow:0 20px 55px rgba(0,0,0,.35)}
+.card img{display:block;width:100%;border-radius:13px}
+.card small{display:block;margin-top:10px;color:#bfc1c6;font:700 10px/1.2 "JetBrains Mono",monospace;letter-spacing:.08em}
+footer{padding:55px 0 80px;text-align:center;color:#62656c;font-size:12px}
+@media(max-width:1000px){
+  .gallery{grid-template-columns:repeat(3,1fr)}
+  .device.side{display:none}
+}
+@media(max-width:700px){
+  .stage{min-height:760px}
+  .rig{height:565px}
+  .device{width:270px;height:565px;top:72px}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
 </head>
 <body>
-<div class="page">
-  <canvas id="fx" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
 
-  <header class="nav" id="nav">
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Mail Factory home">
-        <img src="./assets/logo.png" alt="Mail Factory logo">
-        <span class="brand-text">MAIL <span>FACTORY</span></span>
-      </a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#showcase">Showcase</a>
-        <a href="#screens">Screens</a>
-        <a href="#system">System</a>
-      </nav>
-      <div class="nav-cta"><a class="pill" href="https://github.com/AtawurRahmanTanvir/Mail-Factory" target="_blank" rel="noreferrer">Source ↗</a></div>
-    </div>
-  </header>
+<header class="wrap top">
+  <div class="eyebrow">MAIL FACTORY / LIVE PRODUCT EXPERIENCE</div>
+  <h1>MAIL<span>FACTORY</span></h1>
+  <div class="sub">A living interface — not a static mockup.</div>
 
-  <main id="top">
-    <section class="section hero reveal">
-      <div class="hero-grid">
-        <div>
-          <span class="eyebrow"><i></i> SYSTEM / LOCAL-FIRST / ONLINE</span>
-          <h1>MAIL <span class="red">FACTORY</span></h1>
-          <p class="hero-copy">A cinematic control surface for fast generation, clean organization and local-first workflows — built around the same red-on-black visual language as the app itself.</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#showcase">EXPLORE THE FACTORY <span>↘</span></a>
-            <a class="btn" href="#screens">VIEW ALL SCREENS <span>＋</span></a>
-          </div>
-          <div class="hero-meta">
-            <div class="meta"><b>06</b><span>CORE SURFACES</span></div>
-            <div class="meta"><b>01</b><span>LOCAL WORKSPACE</span></div>
-            <div class="meta"><b>∞</b><span>ROOM TO EVOLVE</span></div>
-          </div>
-        </div>
-
-        <div class="stage" id="heroStage" aria-label="3D Mail Factory device preview">
-          <div class="orb"></div><div class="orbit"></div>
-          <div class="device-wrap" id="deviceWrap">
-            <div class="device-shadow"></div>
-            <div class="device">
-              <div class="screen"><img src="./assets/screens/dashboard.png" alt="Mail Factory Dashboard screen"></div>
-            </div>
-            <div class="floating-tag"><strong>FACTORY // ONLINE</strong><span>dashboard surface / live render</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="marquee" aria-hidden="true"><div class="track">
-      <span>MAIL FACTORY <b>✦</b></span><span>GENERATE <b>✦</b></span><span>ORGANIZE <b>✦</b></span><span>CONTROL <b>✦</b></span><span>LOCAL-FIRST <b>✦</b></span><span>MAIL FACTORY <b>✦</b></span><span>GENERATE <b>✦</b></span><span>ORGANIZE <b>✦</b></span><span>CONTROL <b>✦</b></span><span>LOCAL-FIRST <b>✦</b></span>
-    </div></div>
-
-    <section class="section showcase reveal" id="showcase">
-      <div class="section-head">
-        <div><div class="kicker">01 / APP SURFACES</div><h2>The app, without pretending.</h2></div>
-        <p>Every frame below points at a real image slot from <code>docs/assets/screens/</code>. Replace the six PNGs with renders from the supplied HTML and the entire showcase updates automatically.</p>
-      </div>
-
-      <div class="showcase-shell" id="screens">
-        <aside class="tabs" aria-label="Screen selector">
-          <button class="tab active" data-screen="dashboard"><span class="tab-index">01</span><span><strong>Dashboard</strong><small>Hero / status</small></span></button>
-          <button class="tab" data-screen="engine"><span class="tab-index">02</span><span><strong>Engine</strong><small>Controls / actions</small></span></button>
-          <button class="tab" data-screen="generator"><span class="tab-index">03</span><span><strong>Generator</strong><small>Single / batch</small></span></button>
-          <button class="tab" data-screen="library"><span class="tab-index">04</span><span><strong>Library</strong><small>Search / organize</small></span></button>
-          <button class="tab" data-screen="one-touch"><span class="tab-index">05</span><span><strong>One Touch</strong><small>Fast utility</small></span></button>
-          <button class="tab" data-screen="settings"><span class="tab-index">06</span><span><strong>Settings</strong><small>Control center</small></span></button>
-        </aside>
-
-        <div class="viewer" id="viewer">
-          <div class="viewer-grid"></div>
-          <div class="viewer-top"><span class="viewer-label">MAIL FACTORY / SCREEN RECONSTRUCTION</span><span class="viewer-status"><i></i> READY</span></div>
-          <div class="shot-stage"><div class="shot-card" id="shotCard"><div class="shot-screen"><img id="shotImage" src="./assets/screens/dashboard.png" alt="Dashboard screenshot"></div></div></div>
-          <div class="viewer-caption"><div><div class="title" id="shotTitle">Dashboard</div><div class="desc" id="shotDesc">The cinematic entry surface — status, factory access and the visual anchor of the application.</div></div><div class="counter" id="shotCounter">01 / 06</div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section banner-story reveal">
-      <div class="section-head"><div><div class="kicker">02 / BRAND SURFACE</div><h2>The banner becomes the doorway.</h2></div><p>The supplied hero artwork is kept as a first-class asset instead of burying it inside documentation.</p></div>
-      <div class="banner-frame"><img src="./assets/hero-banner.png" alt="Mail Factory hero banner"></div>
-      <div class="banner-copy"><h3>Your digital freedom.</h3><p>Black glass, crimson light, strong typography and a product-in-device composition give the repository an identity before a visitor reads a single line of code.</p></div>
-    </section>
-
-    <section class="section system reveal" id="system">
-      <div class="section-head"><div><div class="kicker">03 / SYSTEM MAP</div><h2>One product. Multiple surfaces.</h2></div><p>The showcase keeps the app navigation model visible instead of reducing the project to a generic feature list.</p></div>
-      <div class="system-grid">
-        <article class="panel architecture">
-          <div class="nodes">
-            <div class="node center"><b>MAIL FACTORY</b><span>APPLICATION CORE</span></div>
-            <div class="node n1"><b>Dashboard</b><span>ENTRY / STATUS</span></div>
-            <div class="node n2"><b>Engine</b><span>CONTROL / LOG</span></div>
-            <div class="node n3"><b>Generator</b><span>SINGLE / BATCH</span></div>
-            <div class="node n4"><b>Library</b><span>SEARCH / MANAGE</span></div>
-            <svg class="wire" viewBox="0 0 760 520" preserveAspectRatio="none" aria-hidden="true">
-              <line x1="380" y1="260" x2="105" y2="105"></line><line x1="380" y1="260" x2="650" y2="115"></line><line x1="380" y1="260" x2="115" y2="430"></line><line x1="380" y1="260" x2="650" y2="425"></line>
-            </svg>
-          </div>
-        </article>
-        <article class="panel"><div class="panel-pad"><h3>Visual tokens</h3><p>The showcase mirrors the source HTML’s shared utility visual system: dark surfaces, crimson accents, soft glow, monospace telemetry and glass-like depth.</p><div class="metrics"><div class="metric"><strong>#030406</strong><small>environment</small></div><div class="metric"><strong>#EA0C20</strong><small>primary red</small></div><div class="metric"><strong>INTER</strong><small>display type</small></div><div class="metric"><strong>MONO</strong><small>telemetry type</small></div></div></div></article>
-      </div>
-    </section>
-
-    <section class="section reveal" style="padding-top:150px">
-      <div class="section-head"><div><div class="kicker">04 / WORKFLOW</div><h2>Generate. Inspect. Organize. Copy.</h2></div><p>A four-step story that turns the utility into a product experience rather than a folder of files.</p></div>
-      <div class="panel panel-pad"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-        <div class="metric"><strong>01</strong><small>GENERATE</small><p style="margin-top:9px">Single or batch output.</p></div>
-        <div class="metric"><strong>02</strong><small>INSPECT</small><p style="margin-top:9px">Read the result in context.</p></div>
-        <div class="metric"><strong>03</strong><small>ORGANIZE</small><p style="margin-top:9px">Search, sort and manage.</p></div>
-        <div class="metric"><strong>04</strong><small>COPY</small><p style="margin-top:9px">Move exactly what you need.</p></div>
-      </div></div>
-    </section>
-
-    <section class="section footer reveal">
-      <div class="footer-card">
-        <div class="kicker">MAIL FACTORY / REPOSITORY EXPERIENCE</div>
-        <h2>Not a README.<br><span>A product surface.</span></h2>
-        <p>A cinematic repository front door built around the actual app, its visual language and its real screen set — with no dependency on fake product photography.</p>
-        <div class="hero-actions" style="justify-content:center"><a class="btn primary" href="https://github.com/AtawurRahmanTanvir/Mail-Factory" target="_blank" rel="noreferrer">OPEN GITHUB ↗</a><a class="btn" href="#top">BACK TO TOP ↑</a></div>
-        <div class="footer-line"><span>MAIL FACTORY</span><b>BUILD FAST · STAY LOCAL</b><span>2026</span></div>
-      </div>
-    </section>
-  </main>
-</div>
-
-<div class="modal" id="modal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Screen preview">
-    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
-    <img id="modalImage" src="./assets/screens/dashboard.png" alt="Expanded screen preview">
-    <div class="modal-meta"><strong id="modalTitle">Dashboard</strong><span>ESC / CLICK OUTSIDE TO CLOSE</span></div>
+  <div class="hero">
+    <img src="assets/hero-banner.png" alt="Mail Factory — Your Digital Freedom">
   </div>
-</div>
+
+  <div class="cta-row">
+    <a class="cta" href="#live">Enter Live 3D</a>
+    <a class="cta" href="../">Back to Repository</a>
+  </div>
+</header>
+
+<main id="live">
+  <section class="stage">
+    <img class="atmosphere" src="readme/3d-atmosphere.svg" alt="" aria-hidden="true">
+    <div class="noise"></div>
+
+    <div class="stage-head">
+      <div class="eyebrow">LIVE HTML RUNTIME</div>
+      <h2>The Factory, Alive.</h2>
+      <p>The real Mail Factory HTML is rendered inside the 3D presentation layer.</p>
+    </div>
+
+    <div class="rig" id="rig">
+      <div class="device side left" data-screen="dashboard">
+        <div class="device-frame"><div class="screen">
+          <iframe id="frame-left" src="source/mail-factory.html" title="Live Mail Factory Dashboard"></iframe>
+          <div class="scan"></div>
+        </div></div>
+      </div>
+
+      <div class="device" id="centerDevice" data-screen="generator">
+        <div class="device-frame"><div class="screen">
+          <iframe id="frame-center" src="source/mail-factory.html" title="Live Mail Factory Generator"></iframe>
+          <div class="scan"></div>
+        </div></div>
+        <div class="hud">LIVE / GENERATOR / HTML</div>
+      </div>
+
+      <div class="device side right" data-screen="library">
+        <div class="device-frame"><div class="screen">
+          <iframe id="frame-right" src="source/mail-factory.html" title="Live Mail Factory Library"></iframe>
+          <div class="scan"></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button class="screen-btn" data-target="dashboard">DASHBOARD</button>
+      <button class="screen-btn" data-target="engine">ENGINE</button>
+      <button class="screen-btn active" data-target="generator">GENERATOR</button>
+      <button class="screen-btn" data-target="library">LIBRARY</button>
+      <button class="screen-btn" data-target="onetouch">ONE TOUCH</button>
+      <button class="screen-btn" data-target="settings">SETTINGS</button>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2>One app. Multiple surfaces.</h2>
+    <p>
+      The presentation keeps your existing application screenshots exactly as they are.
+      The live showcase is a separate layer: the real HTML application is loaded into
+      device frames while the animated SVG atmosphere provides depth behind it.
+    </p>
+
+    <div class="gallery">
+      <div class="card"><img src="assets/screens/dashboard.png" alt="Dashboard"><small>01 / DASHBOARD</small></div>
+      <div class="card"><img src="assets/screens/engine.png" alt="Engine"><small>02 / ENGINE</small></div>
+      <div class="card"><img src="assets/screens/generator.png" alt="Generator"><small>03 / GENERATOR</small></div>
+      <div class="card"><img src="assets/screens/library.png" alt="Library"><small>04 / LIBRARY</small></div>
+      <div class="card"><img src="assets/screens/one-touch.png" alt="One Touch"><small>05 / ONE TOUCH</small></div>
+      <div class="card"><img src="assets/screens/settings.png" alt="Settings"><small>06 / SETTINGS</small></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  MAIL FACTORY · LIVE HTML + 3D PRESENTATION · LOCAL-FIRST
+</footer>
 
 <script>
-(() => {
-  const screens = {
-    dashboard:{title:'Dashboard',file:'./assets/screens/dashboard.png',desc:'The cinematic entry surface — status, factory access and the visual anchor of the application.'},
-    engine:{title:'Engine',file:'./assets/screens/engine.png',desc:'Engine controls and action surfaces carrying the same crimson interaction language as the dashboard.'},
-    generator:{title:'Generator',file:'./assets/screens/generator.png',desc:'Single and batch generation workflows with compact, direct output actions.'},
-    library:{title:'Library',file:'./assets/screens/library.png',desc:'Search, sorting and result management in the long-term workspace.'},
-    'one-touch':{title:'One Touch',file:'./assets/screens/one-touch.png',desc:'A focused utility surface for fast access to high-frequency actions.'},
-    settings:{title:'Settings',file:'./assets/screens/settings.png',desc:'Appearance, backup, notifications, privacy, support and application information.'}
-  };
+const screens = ["dashboard","engine","generator","library","onetouch","settings"];
 
-  const tabs=[...document.querySelectorAll('.tab')];
-  const shot=document.getElementById('shotImage');
-  const card=document.getElementById('shotCard');
-  const title=document.getElementById('shotTitle');
-  const desc=document.getElementById('shotDesc');
-  const counter=document.getElementById('shotCounter');
-  const modal=document.getElementById('modal');
-  const modalImage=document.getElementById('modalImage');
-  const modalTitle=document.getElementById('modalTitle');
-  const modalClose=document.getElementById('modalClose');
+function showInside(frame, name){
+  try{
+    const w = frame.contentWindow;
+    if(w && typeof w.showScreen === "function"){
+      w.showScreen(name);
+    }
+  }catch(err){}
+}
 
-  function setScreen(key){
-    const item=screens[key]||screens.dashboard;
-    const idx=Object.keys(screens).indexOf(key)+1;
-    card.style.opacity='0';
-    card.style.transform='translateY(12px) rotateX(8deg) rotateY(-15deg) rotateZ(7deg) scale(.97)';
-    setTimeout(()=>{
-      shot.src=item.file;shot.alt=item.title+' screenshot';title.textContent=item.title;desc.textContent=item.desc;counter.textContent=String(idx).padStart(2,'0')+' / 06';
-      tabs.forEach(t=>t.classList.toggle('active',t.dataset.screen===key));
-      requestAnimationFrame(()=>{card.style.opacity='1';card.style.transform='rotateX(3deg) rotateY(-10deg) rotateZ(4deg) scale(1)'});
-    },140);
-  }
-  tabs.forEach(t=>t.addEventListener('click',()=>setScreen(t.dataset.screen)));
-  document.getElementById('viewer').addEventListener('click',(e)=>{
-    if(e.target.closest('.tab')) return;
-    modalImage.src=shot.src;modalImage.alt=shot.alt;modalTitle.textContent=title.textContent;modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+function bindFrame(frame, initial){
+  frame.addEventListener("load", () => {
+    setTimeout(() => showInside(frame, initial), 120);
   });
-  function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
-  modalClose.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+}
 
-  // nav glass state
-  const nav=document.getElementById('nav');
-  const syncNav=()=>nav.classList.toggle('scrolled',window.scrollY>24);window.addEventListener('scroll',syncNav,{passive:true});syncNav();
+const left = document.getElementById("frame-left");
+const center = document.getElementById("frame-center");
+const right = document.getElementById("frame-right");
 
-  // scroll reveal
-  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}}),{threshold:.13});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+bindFrame(left, "dashboard");
+bindFrame(center, "generator");
+bindFrame(right, "library");
 
-  // 3D pointer tilt
-  const stage=document.getElementById('heroStage');
-  const deviceWrap=document.getElementById('deviceWrap');
-  let raf=0,tx=0,ty=0;
-  stage.addEventListener('pointermove',e=>{
-    const r=stage.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5);ty=((e.clientY-r.top)/r.height-.5);
-    cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>deviceWrap.style.transform=`rotateY(${tx*12}deg) rotateX(${-ty*9}deg) translate3d(${tx*8}px,${ty*5}px,0)`);
+function setCenter(name){
+  showInside(center, name);
+  document.querySelectorAll(".screen-btn").forEach(b =>
+    b.classList.toggle("active", b.dataset.target === name)
+  );
+}
+
+document.querySelectorAll(".screen-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const name = btn.dataset.target;
+    setCenter(name);
+    // A little synchronized choreography around the live center screen.
+    const sideTargets = {
+      dashboard:"library",
+      engine:"dashboard",
+      generator:"library",
+      library:"dashboard",
+      onetouch:"generator",
+      settings:"library"
+    };
+    showInside(left, sideTargets[name] || "dashboard");
+    showInside(right, name === "library" ? "settings" : "library");
   });
-  stage.addEventListener('pointerleave',()=>{deviceWrap.style.transform=''});
+});
 
-  // ambient canvas particles / red energy lines
-  const canvas=document.getElementById('fx'),ctx=canvas.getContext('2d');
-  let w=0,h=0,dpr=1; const pts=[]; const N=42;
-  function resize(){dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth=innerWidth;h=canvas.clientHeight=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-  function init(){pts.length=0;for(let i=0;i<N;i++)pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,r:Math.random()*1.8+.4,a:Math.random()*.55+.12,p:Math.random()*Math.PI*2})}
-  addEventListener('resize',()=>{resize();init()});resize();init();
-  let t=0;
-  function draw(){t+=.004;ctx.clearRect(0,0,w,h);
-    for(const p of pts){p.x+=p.vx;p.y+=p.vy;p.p+=.01;if(p.x<-30)p.x=w+30;if(p.x>w+30)p.x=-30;if(p.y<-30)p.y=h+30;if(p.y>h+30)p.y=-30;}
-    for(let i=0;i<pts.length;i++){const a=pts[i];ctx.beginPath();ctx.fillStyle=`rgba(229,9,20,${.12+.10*Math.sin(a.p)})`;ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();for(let j=i+1;j<pts.length;j++){const b=pts[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);if(dist<150){ctx.beginPath();ctx.strokeStyle=`rgba(229,9,20,${.04*(1-dist/150)})`;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}}
-    requestAnimationFrame(draw)}
-  draw();
+// 3D pointer camera: the HTML app stays real; only its presentation frame moves.
+const stage = document.querySelector(".stage");
+const centerDevice = document.getElementById("centerDevice");
+stage.addEventListener("pointermove",(e)=>{
+  const r = stage.getBoundingClientRect();
+  const x = (e.clientX-r.left)/r.width-.5;
+  const y = (e.clientY-r.top)/r.height-.5;
+  centerDevice.style.setProperty("--ry",(x*12).toFixed(2)+"deg");
+  centerDevice.style.setProperty("--rx",(-y*8).toFixed(2)+"deg");
+});
+stage.addEventListener("pointerleave",()=>{
+  centerDevice.style.setProperty("--ry","0deg");
+  centerDevice.style.setProperty("--rx","0deg");
+});
 
-  // image error fallbacks: keep the showcase visually intentional if an asset has not been copied yet.
-  document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{
-    img.style.background='radial-gradient(circle at 50% 30%,rgba(229,9,20,.18),rgba(7,8,11,.96) 60%)';
-    if(img.dataset.fallbackApplied)return;img.dataset.fallbackApplied='1';
-    img.alt='Mail Factory asset placeholder — add the file to docs/assets.';
-  }));
-})();
+// Scroll depth: subtly scale/rotate the presentation as the visitor enters/exits it.
+const rig = document.getElementById("rig");
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const p = entry.intersectionRatio;
+    const scale = .93 + p*.07;
+    rig.style.transform = `scale(${scale}) translateY(${(1-p)*35}px)`;
+  });
+},{threshold:[0,.15,.35,.6,.8,1]});
+observer.observe(rig);
+
+// Auto choreography: cycles side screens while the central live app stays interactive.
+let autoIndex = 0;
+setInterval(()=>{
+  autoIndex=(autoIndex+1)%screens.length;
+  showInside(left, screens[autoIndex]);
+  showInside(right, screens[(autoIndex+2)%screens.length]);
+}, 4200);
 </script>
 </body>
 </html>

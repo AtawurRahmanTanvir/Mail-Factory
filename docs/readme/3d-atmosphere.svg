@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000">
+<defs>
+  <radialGradient id="r" cx="50%" cy="50%" r="70%">
+    <stop offset="0" stop-color="#e50914" stop-opacity=".22"/>
+    <stop offset=".45" stop-color="#e50914" stop-opacity=".07"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="line" x1="0" x2="1">
+    <stop stop-color="#ff2438" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#ff2438" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#ff2438" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+</defs>
+
+<rect width="1800" height="1000" fill="#020304"/>
+<ellipse cx="900" cy="480" rx="760" ry="380" fill="url(#r)" filter="url(#blur)"/>
+
+<!-- perspective grid -->
+<g stroke="#ff2438" stroke-opacity=".10" fill="none">
+  <path d="M60 790H1740"/><path d="M160 845H1640"/><path d="M300 900H1500"/><path d="M480 950H1320"/>
+  <path d="M420 1000L790 550M590 1000L810 550M760 1000L830 550M930 1000L850 550M1100 1000L870 550M1270 1000L890 550M1440 1000L910 550"/>
+</g>
+
+<!-- giant rings -->
+<g transform="translate(900 500)" fill="none">
+  <ellipse rx="600" ry="210" stroke="#ff2438" stroke-opacity=".15" stroke-width="2">
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="28s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse rx="500" ry="170" stroke="#ff6a74" stroke-opacity=".10" stroke-width="1.5">
+    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="21s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse rx="390" ry="135" stroke="#ff2438" stroke-opacity=".16">
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="16s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="600" cy="0" r="7" fill="#ff2438">
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="28s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="500" cy="0" r="4" fill="#fff">
+    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="21s" repeatCount="indefinite"/>
+  </circle>
+</g>
+
+<!-- central glow -->
+<circle cx="900" cy="500" r="170" fill="#e50914" fill-opacity=".08" filter="url(#blur)"/>
+<circle cx="900" cy="500" r="125" fill="none" stroke="#ff2438" stroke-opacity=".20" stroke-width="2">
+  <animate attributeName="r" values="115;140;115" dur="4.4s" repeatCount="indefinite"/>
+</circle>
+
+<!-- moving scan -->
+<rect x="180" y="230" width="1440" height="2" fill="url(#line)">
+  <animate attributeName="y" values="230;790;230" dur="7s" repeatCount="indefinite"/>
+</rect>
+
+<!-- particles -->
+<g fill="#ff2438">
+  <circle cx="380" cy="310" r="2"><animate attributeName="cy" values="310;700;310" dur="5s" repeatCount="indefinite"/></circle>
+  <circle cx="1440" cy="360" r="2"><animate attributeName="cy" values="360;730;360" dur="6s" repeatCount="indefinite"/></circle>
+  <circle cx="610" cy="210" r="1.5"><animate attributeName="cx" values="610;1190;610" dur="5.4s" repeatCount="indefinite"/></circle>
+  <circle cx="1190" cy="740" r="1.5"><animate attributeName="cx" values="1190;610;1190" dur="5.9s" repeatCount="indefinite"/></circle>
+</g>
+
+<text x="900" y="885" text-anchor="middle"
+ fill="#fff" fill-opacity=".28" font-family="JetBrains Mono,monospace"
+ font-size="11" letter-spacing="5">LIVE APP RUNTIME / 3D PRESENTATION LAYER</text>
+</svg>

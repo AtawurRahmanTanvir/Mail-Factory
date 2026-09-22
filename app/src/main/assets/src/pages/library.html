@@ -1,0 +1,117 @@
+<div class="screen-view scr-library" data-screen="library" id="screen-library">
+<!-- header -->
+  <div class="app-header">
+    <div class="lib-left">
+      <button class="app-back-btn" data-action="nav" data-screen="dashboard" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></svg></button>
+      <div class="logo">MAIL <span class="factory">FACTORY</span></div>
+    </div>
+    <div class="header-icons">
+      <button class="icon-btn" id="libSearchBtn" aria-label="Search library">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/><line x1="21" y1="21" x2="16.3" y2="16.3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn active" data-action="open-filter-sheet" aria-label="Sort library">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <line x1="4" y1="6" x2="20" y2="6" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="9.5" cy="6" r="2.1" fill="#0a0508" stroke="var(--accent)" stroke-width="1.6"/>
+          <line x1="4" y1="12" x2="20" y2="12" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="15" cy="12" r="2.1" fill="#0a0508" stroke="var(--accent)" stroke-width="1.6"/>
+          <line x1="4" y1="18" x2="20" y2="18" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="11.5" cy="18" r="2.1" fill="#0a0508" stroke="var(--accent)" stroke-width="1.6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- library -->
+  <div class="library-section">
+    <div>
+      <div class="library-title">LIBRARY</div>
+      <div class="library-subtitle-row">
+        <span class="library-subtitle">All Generated Accounts</span>
+        <span class="live-badge"><span class="live-dot"></span><span class="live-text">LIVE</span></span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2.5L20.5 7.2V16.8L12 21.5L3.5 16.8V7.2L12 2.5Z" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/><path d="M3.5 7.2L12 12L20.5 7.2" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 12V21.5" stroke="var(--accent)" stroke-width="1.5"/></svg>
+      <div>
+        <div class="stat-number">258</div>
+        <div class="stat-label">TOTAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- list -->
+  <div class="list" id="list">
+  </div>
+
+  <footer>
+    <div class="line"></div>
+    <span class="txt">That's all for now</span>
+    <div class="line right"></div>
+  </footer>
+
+  <!-- filter sheet -->
+  <div class="sheet-backdrop" id="backdrop"></div>
+  <div class="sheet" id="filterSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Sort by</div>
+    <div class="filter-option" data-mode="newest">
+      <span>Newest first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="filter-option" data-mode="oldest">
+      <span>Oldest first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="filter-option" data-mode="singles">
+      <span>Singles first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="filter-option" data-mode="batches">
+      <span>Batches first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="filter-option" data-mode="starred">
+      <span>Starred first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="filter-option" data-mode="verified">
+      <span>Verified first</span>
+      <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19.5 7" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <!-- search sheet -->
+  <div class="sheet" id="searchSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Search Library</div>
+    <div class="search-row">
+      <input class="search-input" id="libSearchInput" type="text" placeholder="Email, batch name or account" autocomplete="off" aria-label="Search library accounts">
+      <button class="search-clear" id="libSearchClear" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="search-meta" id="libSearchMeta"></div>
+  </div>
+
+  <!-- card options sheet -->
+  <div class="sheet" id="cardMenuSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-sub" id="cardMenuTitle">—</div>
+    <div class="sheet-option" id="cardMenuStarOption">
+      <span id="cardMenuStarIcon"></span>
+      <span id="cardMenuStarLabel">Add to Starred</span>
+    </div>
+    <div class="sheet-option" id="cardMenuVerifyOption">
+      <span id="cardMenuVerifyIcon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span>
+      <span id="cardMenuVerifyLabel">Verify</span>
+    </div>
+    <div class="sheet-option" id="cardMenuRenameOption">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 20L4.6 16.4L15.5 5.5C16.1 4.9 17.1 4.9 17.7 5.5L18.9 6.7C19.5 7.3 19.5 8.3 18.9 8.9L8 19.8L4 20Z" stroke="var(--accent)" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 7L17.5 10.5" stroke="var(--accent)" stroke-width="1.7"/></svg>
+      <span>Rename</span>
+    </div>
+    <div class="sheet-option danger" id="cardMenuDeleteOption">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 7H19" stroke="#ff4545" stroke-width="1.7" stroke-linecap="round"/><path d="M9 7V4.5C9 3.9 9.5 3.5 10 3.5H14C14.5 3.5 15 3.9 15 4.5V7" stroke="#ff4545" stroke-width="1.7" stroke-linecap="round"/><path d="M7 7L7.8 19C7.85 19.85 8.55 20.5 9.4 20.5H14.6C15.45 20.5 16.15 19.85 16.2 19L17 7" stroke="#ff4545" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.3 11V16.5" stroke="#ff4545" stroke-width="1.6" stroke-linecap="round"/><path d="M13.7 11V16.5" stroke="#ff4545" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Delete</span>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,255 @@
+.scr-settings .project-website-link {
+  display:flex; align-items:center; gap:13px;
+  padding:13px 13px 13px 15px; border-radius:16px;
+  color:#fff; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(135deg, rgba(255,27,48,0.15), rgba(255,255,255,0.035) 44%, rgba(0,0,0,0.22));
+  border:1px solid rgba(255,27,48,0.38);
+  box-shadow:0 0 20px rgba(255,27,48,0.11), 0 5px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
+  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease, filter .15s ease;
+}
+.scr-settings .project-website-link .icon-box { margin:0; width:38px; height:38px; border-radius:12px;
+  box-shadow:0 0 14px rgba(255,20,40,0.3), inset 0 0 6px rgba(255,20,40,0.14); }
+/* 19px @ sw1.8 on a 24 box renders the same ~1.4px stroke as the other About icons (17.5px @ sw2) */
+.scr-settings .project-website-link .icon-box svg.ic { width:19px; height:19px; stroke-width:1.8; }
+.scr-settings .project-website-link .website-copy { flex:1; min-width:0; }
+.scr-settings .project-website-link .website-title { display:block; font-size:13.5px; font-weight:800; letter-spacing:.02em; }
+.scr-settings .project-website-link .website-url { display:block; margin-top:3.5px; font-size:11px; font-weight:500;
+  letter-spacing:.01em; color:rgba(255,255,255,0.5); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.scr-settings .project-website-link .pw-go { width:26px; height:26px; flex-shrink:0; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid rgba(255,27,48,0.3); background:rgba(255,27,48,0.07); }
+.scr-settings .project-website-link .pw-go svg { width:13px; height:13px; fill:none; stroke:var(--red-soft);
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+@media(hover:hover){
+  .scr-settings .project-website-link:hover { border-color:rgba(255,27,48,0.6);
+    box-shadow:0 0 26px rgba(255,27,48,0.17), 0 6px 18px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08); }
+  .scr-settings .project-website-link:hover .pw-go { border-color:rgba(255,27,48,0.5); background:rgba(255,27,48,0.12); }
+}
+/* :active deliberately follows the :hover block: while pressing on a pointer device :hover is also
+   true, so source order decides. Placing it earlier let the hover shadow win over the pressed look. */
+.scr-settings .project-website-link:active { transform:scale(0.985); filter:brightness(1.04);
+  border-color:rgba(255,27,48,0.5);
+  background:linear-gradient(135deg, rgba(255,27,48,0.18), rgba(255,255,255,0.02) 44%, rgba(0,0,0,0.24));
+  box-shadow:0 0 24px rgba(255,27,48,0.15), 0 3px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); }
+.scr-settings .project-website-link:active .pw-go { border-color:rgba(255,27,48,0.55); background:rgba(255,27,48,0.14); }
+.scr-settings .project-website-link:focus-visible { outline:2px solid var(--red); outline-offset:2px; }
+
+
+/* Scoped integration only: One Touch shell and relocated Help. */
+.screen-view.active.scr-onetouch{display:flex!important;}
+.scr-onetouch{height:100vh;height:100dvh;min-height:0!important;flex-direction:column;background:var(--u-bg);overflow:hidden;}
+.scr-onetouch #oneTouchVPN{display:block;border:0;width:100%;flex:1;min-height:0;background:#050506;}
+.app-nav-item[onclick="showScreen('onetouch')"] span{white-space:nowrap;}
+.app-nav-item[onclick="showScreen('onetouch')"]:focus-visible{outline:2px solid var(--u-red);outline-offset:-5px;border-radius:10px;}
+#page-helpcenter .help-archive{height:auto;min-height:0;display:block;padding-bottom:0!important;background:none;overflow:visible;margin-bottom:24px;}
+#page-helpcenter .help-archive .panel-wrap{margin:0;}
+#page-helpcenter .help-archive .row{min-height:0;}
+#page-helpcenter .help-archive .row.acc-trigger{min-height:44px;}
+#page-helpcenter .help-archive .card{box-shadow:none;}
+#page-helpcenter .help-archive .acc-item.open .acc-answer{max-height:400px;}
+#page-helpcenter .help-archive .acc-trigger:focus-visible{outline:2px solid var(--u-red);outline-offset:-2px;border-radius:8px;}
+.scr-settings:has(.backup-screen.open) #toast{z-index:260;max-width:calc(100vw - 32px);white-space:normal;text-align:center;}
+@media(max-width:360px){#page-helpcenter > .screen > .content{padding-left:16px;padding-right:16px;}}
+
+
+/* Native One Touch presentation — shared nav only affects the requested navigation. */
+.screen-view.active.scr-onetouch{display:block!important;}
+.scr-onetouch{height:auto;min-height:100dvh!important;overflow:visible;background:var(--u-bg);}
+@keyframes oneTouchHeaderIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.scr-onetouch #oneTouchVPN{position:relative;z-index:1;display:block;width:100%;min-height:0;background:var(--u-bg);}
+.scr-onetouch.one-touch-modal #oneTouchVPN{z-index:90;}
+.app-bottomnav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:480px;z-index:60;border-radius:21px 21px 0 0;background:linear-gradient(180deg,#15151ceF,#09090ef5);backdrop-filter:blur(24px) saturate(125%);-webkit-backdrop-filter:blur(24px) saturate(125%);box-shadow:0 -8px 26px #0006,inset 0 1px 0 #ffffff10;padding:0 10px env(safe-area-inset-bottom,0px);isolation:isolate;}
+.app-bottomnav::before{left:22px;right:22px;background:linear-gradient(90deg,transparent,#ffffff19 28%,#ea0c2050 68%,transparent);height:1px;opacity:1;}
+.app-nav-item{min-height:76px;gap:6px;padding:13px 6px 14px;font-size:9px;letter-spacing:.085em;font-weight:700;color:#81828c;transition:color .25s ease,transform .2s ease;}
+.app-nav-item svg{width:21px;height:21px;transition:filter .3s ease,transform .3s cubic-bezier(.22,.7,.3,1);}
+.app-nav-item + .app-nav-item{border-left:0;}
+.app-nav-item::after{content:'';position:absolute;top:0;left:12%;right:12%;height:100%;background:radial-gradient(ellipse at 50% 0,#ea0c2038,transparent 76%);opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:-1;}
+.app-nav-item.active::after{left:12%;right:12%;background:radial-gradient(ellipse at 50% 0,#ea0c2038,transparent 76%);opacity:1;}
+.app-nav-item.active{color:#ff4555;}
+.app-nav-item.active svg{transform:translateY(-1px);filter:drop-shadow(0 0 5px #ff243855);}
+.app-nav-item:active svg{transform:translateY(0) scale(.92);}
+.app-nav-item:focus-visible{outline:1px solid #ea0c2080;outline-offset:-5px;border-radius:12px;}
+.app-nav-item .one-touch-icon{width:22px;height:22px;}
+/* Settings-native Help composition. Text and original accordion handlers retained. */
+#page-helpcenter{background:#050506;}
+#page-helpcenter > .screen{max-width:427px;background:radial-gradient(ellipse at 30% 0,#260a102e,transparent 400px),#050506;}
+#page-helpcenter > .screen > .glow-top{opacity:.4;}
+#page-helpcenter > .screen > .content{padding:20px 21px max(28px,env(safe-area-inset-bottom));}
+#page-helpcenter .help-archive{margin-bottom:28px;font-family:var(--u-font);color:var(--u-text);}
+#page-helpcenter .help-archive .panel-wrap{display:block;}
+#page-helpcenter .help-archive .panel{background:none;border:0;border-radius:0;padding:0;}
+#page-helpcenter .help-head{border:0;padding:0;margin-bottom:26px;gap:12px;align-items:center;}
+#page-helpcenter .help-badge{width:42px;height:42px;border-radius:13px;border:1px solid #ea0c2040;background:linear-gradient(145deg,#241016aa,#0c0c10);box-shadow:inset 0 1px 0 #ffffff08;color:#f56773;font-size:18px;font-weight:600;}
+#page-helpcenter .help-head h1{font-size:12px;letter-spacing:.1em;font-weight:700;color:#d1d1d8;}
+#page-helpcenter .help-head p{font-size:12px;line-height:1.6;color:#83838e;margin-top:4px;}
+#page-helpcenter .help-archive .section{padding:0;margin-bottom:24px;}
+#page-helpcenter .help-archive .section-label{font-size:10px;font-weight:700;letter-spacing:.14em;color:#c0c0c9;margin:0 0 11px;gap:8px;}
+#page-helpcenter .help-archive .section-label::after{content:'';height:1px;flex:1;background:linear-gradient(90deg,#ffffff0d,transparent);margin-left:4px;}
+#page-helpcenter .help-archive .section-label .bar{width:3px;height:10px;background:#ea0c20;border-radius:2px;box-shadow:none;}
+#page-helpcenter .help-archive .card{background:linear-gradient(155deg,#111116,#0b0b0f);border:1px solid #ffffff0b;border-radius:16px;box-shadow:inset 0 1px 0 #ffffff04,0 8px 20px #0002;}
+#page-helpcenter .help-archive .row{padding:13px 12px;gap:11px;border-bottom-color:#ffffff08;min-height:56px;}
+#page-helpcenter .help-archive .row.acc-trigger{min-height:62px;transition:background .22s ease;}
+#page-helpcenter .help-archive .row.acc-trigger:active{background:#ea0c2009;}
+#page-helpcenter .help-archive .num-badge,#page-helpcenter .help-archive .icon-badge,#page-helpcenter .help-archive .q-badge{width:32px;height:32px;border-radius:10px;border:1px solid #ea0c202b;background:linear-gradient(145deg,#29101760,#0d0c10);box-shadow:inset 0 1px 0 #ffffff05;color:#ec7a86;font-size:12px;font-weight:600;}
+#page-helpcenter .help-archive .icon-badge svg{color:#e37582;width:16px;height:16px;}
+#page-helpcenter .help-archive .row-title{font-size:12px;font-weight:600;letter-spacing:.005em;line-height:1.45;}
+#page-helpcenter .help-archive .row-desc{font-size:11px;line-height:1.55;color:#83838f;margin-top:3px;}
+#page-helpcenter .help-archive .row-desc.single{margin-top:0;font-size:11.5px;color:#aaaab4;}
+#page-helpcenter .help-archive .faq-text{font-size:12px;line-height:1.5;color:#d9d9e1;}
+#page-helpcenter .help-archive .acc-item{border-bottom:1px solid #ffffff08;transition:background .25s ease;}
+#page-helpcenter .help-archive .acc-item:last-child{border-bottom:0;}
+#page-helpcenter .help-archive .acc-item.open{background:linear-gradient(110deg,#ea0c2009,transparent);}
+#page-helpcenter .help-archive .acc-answer{display:grid;grid-template-rows:0fr;max-height:none!important;opacity:0;transition:grid-template-rows .3s cubic-bezier(.2,.7,.3,1),opacity .25s ease;}
+#page-helpcenter .help-archive .acc-item.open .acc-answer{grid-template-rows:1fr;opacity:1;}
+#page-helpcenter .help-archive .answer-clip{min-height:0;overflow:hidden;}
+#page-helpcenter .help-archive .acc-answer-inner,#page-helpcenter .help-archive .acc-answer-inner.faq{padding:0 16px 16px 55px;font-size:11.5px;line-height:1.75;color:#a0a0ad;}
+#page-helpcenter .help-archive .chevron{width:13px;height:13px;color:#767682;}
+#page-helpcenter .help-archive .version{font:500 10px var(--u-mono);color:#5e5e6b;margin-top:4px;}
+#page-helpcenter .sp-intro-title{font-size:13px;letter-spacing:.01em;text-transform:none;}
+#page-helpcenter .sp-intro-text{font-size:12px;line-height:1.65;color:#858590;}
+#page-helpcenter .sp-community-card{padding:16px;border-radius:16px;background:linear-gradient(145deg,#121016,#0b0b0f);border:1px solid #ffffff0c;box-shadow:inset 0 1px 0 #ffffff04;margin-bottom:12px;}
+#page-helpcenter .sp-community-head .icon-box{width:34px;height:34px;border-radius:11px;border-color:#ea0c202b;box-shadow:none;background:#ea0c2009;}
+#page-helpcenter .sp-community-head .icon-box svg{filter:none;color:#e37582;}
+#page-helpcenter .sp-community-head .t{font-size:13px;}
+#page-helpcenter .sp-community-text{font-size:12px;line-height:1.65;color:#858590;}
+#page-helpcenter .sp-btn{border:1px solid #ea0c2040;background:linear-gradient(180deg,#201014,#100a0d);border-radius:11px;box-shadow:inset 0 1px 0 #ffffff06;min-height:44px;font-size:10px;letter-spacing:.06em;}
+@media(max-width:360px){#page-helpcenter > .screen > .content{padding-left:16px;padding-right:16px;}}
+@media(prefers-reduced-motion:reduce){#page-helpcenter .help-archive .acc-answer,.app-nav-item,.app-nav-item svg{transition:none;}}
+
+
+/* Final scroll/safe-area integration for the native One Touch surface. */
+.scr-onetouch{padding-top:calc(125px + env(safe-area-inset-top,0px));}
+html:has(.scr-onetouch.active){scroll-padding-top:calc(100px + env(safe-area-inset-top,0px));scroll-padding-bottom:calc(92px + env(safe-area-inset-bottom,0px));}
+.app-nav-item{font-size:9.5px;letter-spacing:.075em;}
+
+
+/* ONE utility shell: the exact same DOM nodes serve Engine, Generator and One Touch.
+   No screen-specific branding, padding, scale, or nav treatment is applied here. */
+:root{--utility-topbar-height:80px;--utility-navbar-height:76px;--utility-gutter:20px;}
+#utilityHeader[hidden],#utilityNav[hidden]{display:none!important;}
+#utilityHeader{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:70;box-sizing:border-box;min-height:calc(var(--utility-topbar-height) + env(safe-area-inset-top,0px));height:calc(var(--utility-topbar-height) + env(safe-area-inset-top,0px));padding:calc(19px + env(safe-area-inset-top,0px)) var(--utility-gutter) 19px;gap:16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#080809f5,#050506ee);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid #ffffff07;box-shadow:0 6px 20px #0002;}
+#utilityHeader .app-logo{font-family:var(--u-font);font-size:clamp(22px,6.4vw,29px);font-weight:900;letter-spacing:-.01em;line-height:1.1;text-transform:uppercase;white-space:nowrap;}
+#utilityHeader .app-logo .mail{color:var(--u-text);}
+#utilityHeader .app-logo .factory{color:var(--u-red);margin-left:.28em;}
+#utilityHeader .app-settings-btn{width:42px;height:42px;flex:0 0 42px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:rgba(234,12,32,.06);border:1.5px solid var(--u-red-line);color:var(--u-red);box-shadow:0 0 0 1px #ea0c2026 inset,0 0 18px #ea0c2052;transition:box-shadow .2s ease,background .2s ease,transform .15s ease;}
+#utilityHeader .app-settings-btn svg{width:20px;height:20px;display:block;filter:none;}
+#utilityHeader .app-settings-btn:active{transform:scale(.93);background:rgba(234,12,32,.14);}
+#utilityHeader .app-settings-btn:focus-visible{outline:2px solid var(--u-red-bright);outline-offset:3px;}
+#utilityNav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:480px;z-index:60;display:flex;box-sizing:border-box;padding:0 10px env(safe-area-inset-bottom,0px);border-radius:21px 21px 0 0;background:linear-gradient(180deg,#15151cef,#09090ef5);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 -8px 26px #0006,inset 0 1px 0 #ffffff10;isolation:isolate;}
+#utilityNav .app-nav-item{height:var(--utility-navbar-height);min-height:var(--utility-navbar-height);padding:13px 6px 14px;gap:6px;font:700 9.5px var(--u-font);letter-spacing:.075em;line-height:1.2;color:var(--u-text-dim);opacity:1;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#utilityNav .nav-icon-wrap{width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+#utilityNav .app-nav-item svg,#utilityNav .app-nav-item .one-touch-icon{width:22px;height:22px;transform:none;filter:none;}
+#utilityNav .app-nav-item.active{color:var(--u-red-bright);}
+#utilityNav .app-nav-item.active svg{transform:none;filter:drop-shadow(0 0 5px #ff243855);}
+#utilityNav .app-nav-item:active svg{transform:scale(.94);}
+#screen-engine,#screen-onetouch{padding-top:calc(var(--utility-topbar-height) + env(safe-area-inset-top,0px));}
+#screen-generator{padding-top:0;}
+#screen-generator > .app-shell{padding-top:calc(var(--utility-topbar-height) + 12px + env(safe-area-inset-top,0px));}
+html:has(#utilityHeader:not([hidden])){scroll-padding-top:calc(var(--utility-topbar-height) + 12px + env(safe-area-inset-top,0px));scroll-padding-bottom:calc(var(--utility-navbar-height) + 16px + env(safe-area-inset-bottom,0px));}
+/* Help reuses Settings' own design tokens and card / row hierarchy. */
+#page-helpcenter,#page-helpcenter > .screen{background:var(--bg);}
+#page-helpcenter > .screen > .glow-top{opacity:1;}
+#page-helpcenter > .screen > .content{padding:19px 21px max(28px,env(safe-area-inset-bottom,0px));}
+#page-helpcenter .help-archive .section{margin-bottom:26px;}
+#page-helpcenter .help-archive .section-label{font-size:13.5px;font-weight:800;letter-spacing:1.6px;color:var(--red);margin-bottom:12px;}
+#page-helpcenter .help-archive .section-label::after{background:linear-gradient(90deg,rgba(255,40,55,.5),transparent);}
+#page-helpcenter .help-archive .section-label .bar{background:var(--red);}
+#page-helpcenter .help-archive .card,#page-helpcenter .sp-community-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;box-shadow:0 0 30px rgba(255,10,30,.06);}
+#page-helpcenter .help-archive .row{padding:12px 15px;gap:12px;border-bottom-color:var(--divider);}
+#page-helpcenter .help-archive .row-title,#page-helpcenter .help-archive .faq-text{font-size:13.5px;font-weight:500;letter-spacing:.1px;color:var(--text-white);}
+#page-helpcenter .help-archive .row-desc{font-size:11px;font-weight:500;color:rgba(255,255,255,.4);}
+#page-helpcenter .help-archive .row-desc.single{font-size:12px;color:rgba(255,255,255,.6);}
+#page-helpcenter .help-archive .acc-item{border-bottom-color:var(--divider);}
+#page-helpcenter .help-archive .acc-item.open{background:rgba(255,20,40,.035);}
+#page-helpcenter .help-archive .acc-answer-inner,#page-helpcenter .help-archive .acc-answer-inner.faq{font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.6);padding-left:59px;}
+#page-helpcenter .help-archive .num-badge,#page-helpcenter .help-archive .icon-badge,#page-helpcenter .help-archive .q-badge,#page-helpcenter .help-badge,#page-helpcenter .sp-community-head .icon-box{border:1.5px solid var(--red-dim);border-radius:10px;background:rgba(255,20,40,.04);color:var(--red-soft);box-shadow:0 0 8px rgba(255,20,40,.18),inset 0 0 5px rgba(255,20,40,.1);}
+#page-helpcenter .help-archive .icon-badge svg{color:var(--red-soft);}
+#page-helpcenter .sp-btn{border-color:var(--red-dim);color:var(--red-soft);background:rgba(255,20,40,.04);}
+@media(max-width:360px){#page-helpcenter > .screen > .content{padding-left:16px;padding-right:16px;}}
+
+
+/* Help is the same Settings sub-page shell: no bespoke entry animation. */
+#page-helpcenter > .screen > .content{padding:19px 21px 24px;}
+#page-helpcenter .header .back-btn{min-width:0;min-height:0;position:relative;}
+#page-helpcenter .header .back-btn::after{content:"";position:absolute;inset:-5px;}
+#page-helpcenter .header h1{min-width:0;}
+#page-helpcenter .help-archive{margin-bottom:24px;}
+
+/* Library values are text, never browser navigation. Scope excludes every other screen. */
+#screen-library :is(.account-email,.sub-email),
+#screen-library :is(.account-email,.sub-email) :is(a,a:link,a:visited,a:hover,a:active,[data-cfemail],[x-apple-data-detectors]){
+ color:var(--white)!important;-webkit-text-fill-color:var(--white)!important;
+ text-decoration:none!important;text-decoration-line:none!important;
+}
+#screen-library :is(.account-email,.sub-email) :is(a,[data-cfemail],[x-apple-data-detectors]){
+ font:inherit!important;letter-spacing:inherit!important;line-height:inherit!important;
+ border:0!important;background:none!important;box-shadow:none!important;cursor:text;
+}
+
+
+/* Settings layout audit: content owns height; decoration cannot create scroll overflow. */
+#screen-settings.screen-view{min-height:0!important;height:auto;align-items:flex-start;}
+#screen-settings .screen{min-height:0;}
+#screen-settings > .screen{height:auto;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));}
+#screen-settings > .screen > .content{padding-bottom:14px;}
+#screen-settings > .screen > .content > .section:last-child{margin-bottom:0;}
+#screen-settings > .screen > .bottom-deco{position:relative;left:auto;right:auto;bottom:auto;display:block;height:16px;margin:0;}
+#screen-settings > .screen > .settings-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+#screen-settings > .screen > .bottom-deco svg{display:block;}
+
+
+#utilityHeader .app-logo[role="button"]{cursor:pointer;user-select:none;}
+#utilityHeader .app-logo:focus-visible{outline:2px solid var(--u-red);outline-offset:5px;border-radius:2px;}
+
+/* ===== Production pass: Library search (reuses existing sheet + card design) ===== */
+.scr-library .search-row{
+  display:flex;align-items:center;gap:10px;
+  margin:2px 2px 4px;
+}
+.scr-library .search-input{
+  flex:1;min-width:0;
+  background:var(--card-bg);
+  border:1.3px solid rgba(var(--accent-rgb),0.35);
+  border-radius:12px;
+  padding:12px 14px;
+  color:var(--white);
+  font-family:inherit;font-size:14px;
+  outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.scr-library .search-input::placeholder{color:var(--gray-dim);}
+.scr-library .search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(var(--accent-rgb),0.14);
+}
+.scr-library .search-clear{
+  flex-shrink:0;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(var(--accent-rgb),0.06);
+  border:1.3px solid rgba(var(--accent-rgb),0.35);
+  border-radius:12px;cursor:pointer;
+  transition:background .15s ease;
+}
+.scr-library .search-clear:active{background:rgba(var(--accent-rgb),0.2);}
+.scr-library .search-clear svg{width:15px;height:15px;}
+.scr-library .search-meta{
+  min-height:22px;
+  padding:10px 4px 0;
+  font-size:11.5px;font-weight:600;color:var(--gray);
+  letter-spacing:0.2px;
+}
+.scr-library .search-meta.none{color:var(--gray-dim);}
+
+/* ===== Production pass: keyboard focus visibility for div-based controls ===== */
+#screen-settings [role="button"]:focus-visible,
+#screen-engine [role="button"]:focus-visible,
+#screen-dashboard [role="button"]:focus-visible,
+#screen-library [role="button"]:focus-visible,
+#screen-library button:focus-visible,
+#page-helpcenter [role="button"]:focus-visible{
+  outline:2px solid rgba(234,12,32,0.75);
+  outline-offset:2px;
+  border-radius:10px;
+}
+/* real <button> elements must inherit the app font (browser default differs) */
+button.sp-btn{font-family:inherit;letter-spacing:inherit;}

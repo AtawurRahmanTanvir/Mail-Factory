@@ -1,0 +1,204 @@
+/* =========================================================================
+   MAIL FACTORY — merged application
+   Screens: Dashboard (protected) / Engine / Generator / Library / Help / Settings (protected)
+   Each screen's original CSS is scoped under a unique .scr-* root class so
+   identically-named selectors (.card, .row, .divider, .logo, .chevron, ...)
+   from different source files never collide.
+   ========================================================================= */
+
+*{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html,body{ height:100%; background:#060606; }
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- App shell: one screen visible at a time, no reload ---------- */
+.app-root{
+  width:100%;
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  min-height:100dvh;
+  position:relative;
+  overflow-x:hidden;
+}
+.screen-view{ display:none !important; min-height:100vh; min-height:100dvh; }
+.screen-view.active{ animation:screenIn .22s ease; }
+/* Each screen's root keeps whatever display mode its own original design
+   needs (flex for Settings/Generator/Help which center/column their content;
+   block for Dashboard/Engine/Library which never declared a display at all).
+   !important guarantees this always wins over the equal-specificity
+   .scr-* {display:...} rules further down the sheet regardless of source order. */
+.screen-view.active.scr-dashboard{ display:block !important; }
+.screen-view.active.scr-settings{ display:flex !important; }
+.screen-view.active.scr-generator{ display:flex !important; }
+.screen-view.active.scr-engine{ display:block !important; }
+.screen-view.active.scr-help{ display:flex !important; }
+.screen-view.active.scr-library{ display:block !important; }
+@keyframes screenIn{ from{ opacity:0;} to{ opacity:1;} }
+
+/* =========================================================================
+   SHARED COMPONENTS — used by Engine / Generator / Help (utility screens)
+   Canonical per the decision document: one title treatment, one settings
+   button treatment, one bottom navigation (icon set + glow behavior).
+   ========================================================================= */
+:root{
+  --u-bg: #030406;
+  --u-red: #ea0c20;
+  --u-red-bright: #ff2438;
+  --u-red-line: rgba(234,12,32,0.55);
+  --u-red-dim: rgba(234,12,32,0.16);
+  --u-card: #0a0c11;
+  --u-card-2: #0c0f14;
+  --u-border: rgba(255,255,255,0.09);
+  --u-border-soft: rgba(255,255,255,0.06);
+  --u-text: #f4f4f5;
+  --u-text-dim: #9a9da3;
+  --u-text-faint: #63666c;
+  --u-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --u-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+.app-shell{
+  background: var(--u-bg);
+  color: var(--u-text);
+  font-family: var(--u-font);
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding: 22px 14px 14px;
+  background:
+    radial-gradient(ellipse 700px 380px at 50% -80px, rgba(234,12,32,0.14), transparent 60%),
+    radial-gradient(ellipse 500px 400px at 100% 30%, rgba(20,25,40,0.30), transparent 60%),
+    radial-gradient(ellipse 500px 500px at 0% 70%, rgba(20,10,20,0.30), transparent 60%),
+    var(--u-bg);
+}
+.app-shell .app-inner{
+  width:100%;
+  max-width:460px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* ---------- Canonical topbar: same title treatment + settings button everywhere ---------- */
+.app-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 2px 2px 0;
+}
+/* Engine and Help aren't wrapped in .app-shell's own padding (they keep their
+   original full-bleed body layouts), so the shared topbar needs its own
+   spacing there to match Generator's rhythm. */
+.scr-engine .app-topbar{ padding: 19px 20px 15px; }
+.scr-help .app-topbar{ padding: 16px 16px 9px; }
+.app-topbar .app-logo{
+  font-family: var(--u-font);
+  font-size: clamp(22px, 6.4vw, 29px);
+  font-weight:900;
+  letter-spacing:-0.01em;
+  text-transform:uppercase;
+}
+.app-topbar .app-logo .mail{ color:var(--u-text); }
+.app-topbar .app-logo .factory{ color:var(--u-red); margin-left:0.28em; }
+
+.app-settings-btn, .app-back-btn{
+  width:42px; height:42px;
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(234,12,32,0.06);
+  border: 1.5px solid var(--u-red-line);
+  border-radius: 12px;
+  color: var(--u-red);
+  cursor:pointer;
+  box-shadow: 0 0 0 1px rgba(234,12,32,0.15) inset, 0 0 18px rgba(234,12,32,0.32);
+  transition: box-shadow .2s ease, background .2s ease, transform .15s ease;
+}
+.app-settings-btn svg, .app-back-btn svg{ width:20px; height:20px; display:block; }
+.app-settings-btn:active, .app-back-btn:active{ transform:scale(0.93); background:rgba(234,12,32,0.14); }
+
+/* ---------- Canonical bottom navigation ----------
+   Structure from Generator, Engine's Generator+Help icons, Generator's
+   Engine icon, and Help's soft red glow-slide active effect - combined
+   into one component, kept minimal per feedback: just icon + label,
+   locked to the bottom of the viewport, active state shown only via a
+   soft top-to-bottom glow (no boxes, no underline) - dressed up with more
+   material depth (gradient body, glowing top edge, curved top corners)
+   so the minimalism reads as premium rather than plain. */
+.app-bottomnav{
+  position:fixed;
+  left:50%; bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  z-index:60;
+  display:flex;
+  background: linear-gradient(180deg, rgba(16,17,21,0.94) 0%, rgba(6,7,9,0.97) 100%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-radius: 22px 22px 0 0;
+  box-shadow:
+    0 -14px 34px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  overflow:hidden;
+}
+/* fine glowing accent line tracing the top edge - the bar's one signature detail */
+.app-bottomnav::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(234,12,32,0.7) 20%, rgba(255,90,80,0.85) 50%, rgba(234,12,32,0.7) 80%, transparent);
+  opacity:0.75;
+}
+.app-nav-item{
+  flex:1;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  padding: 30px 8px 30px;
+  background:none; border:none; cursor:pointer;
+  color: var(--u-text-dim);
+  font-family:var(--u-font); font-size:10.5px; font-weight:800; letter-spacing:0.07em;
+  position:relative;
+  transition: color .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-nav-item svg{ width:22px; height:22px; display:block; transition: filter .25s ease, transform .25s ease; }
+.app-nav-item .nav-icon-wrap{ display:flex; align-items:center; justify-content:center; position:relative; }
+.app-nav-item.active{ color: var(--u-red); }
+.app-nav-item.active svg{
+  filter: drop-shadow(0 0 7px rgba(255,40,58,0.75));
+  transform: translateY(-1px);
+}
+/* soft light falling from the top of the tab, the only active-state cue */
+.app-nav-item.active::after{
+  content:'';
+  position:absolute; top:0; left:6%; right:6%; height:100%;
+  background:linear-gradient(180deg, rgba(255,36,56,0.32), rgba(255,36,56,0.06) 55%, transparent 88%);
+  pointer-events:none;
+  z-index:-1;
+}
+.app-nav-item + .app-nav-item{ border-left: 1px solid rgba(255,255,255,0.05); }
+
+/* content areas need bottom clearance so the fixed nav never covers content */
+.scr-engine{ padding-bottom: 135px !important; }
+.scr-help{ padding-bottom: 135px !important; }
+.app-shell{ padding-bottom: calc(500px + env(safe-area-inset-bottom, 0)); }
+
+
+.app-panel{
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0) 40%), #060709;
+  border: 1px solid var(--u-border-soft);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+}
+
+@media (max-width:380px){
+  .app-topbar .app-logo{ font-size:20px; }
+}

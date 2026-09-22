@@ -1,0 +1,224 @@
+<div class="screen-view scr-generator" data-screen="generator" id="screen-generator">
+<div class="app-shell"><div class="app-inner">
+<div class="app">
+
+  
+
+  <!-- Panel -->
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab active" data-tab="single">SINGLE<span class="tab-underline"></span></button>
+      <button class="tab" data-tab="batch">BATCH<span class="tab-underline"></span></button>
+    </div>
+
+    <!-- SINGLE VIEW -->
+    <div data-view="single" class="active">
+      <div class="subtitle">Generate a single email and password</div>
+
+      <div class="fields">
+        <div class="field-card">
+          <div class="icon-box"><span class="glyph">Aa</span></div>
+          <div class="field-body">
+            <div class="field-label-row">
+              <span class="field-label">Name Pattern</span>
+              <span class="field-counter"><span id="s-name-count">0</span>/20</span>
+            </div>
+            <input class="text-input" id="s-name" maxlength="20" placeholder="e.g., John, Mike, Alex">
+          </div>
+        </div>
+
+        <div class="field-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3 6.5 12 13l9-6.5"/></svg>
+          </div>
+          <div class="field-body">
+            <div class="field-label-row"><span class="field-label">Email Length</span></div>
+            <div class="num-row">
+              <input class="text-input" id="s-email-len" type="number" value="10" inputmode="numeric">
+              <div class="unit-box">characters</div>
+              <div class="stepper">
+                <button class="up" data-target="s-email-len" data-dir="1" aria-label="increase">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+                </button>
+                <button data-target="s-email-len" data-dir="-1" aria-label="decrease">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M7 11V7.5a5 5 0 0 1 10 0V11"/><circle cx="12" cy="15.3" r="1.4" fill="currentColor" stroke="none"/><path d="M12 16.7V18.3"/></svg>
+          </div>
+          <div class="field-body">
+            <div class="field-label-row"><span class="field-label">Password Length</span></div>
+            <div class="num-row">
+              <input class="text-input" id="s-pass-len" type="number" value="12" inputmode="numeric">
+              <div class="unit-box">characters</div>
+              <div class="stepper">
+                <button class="up" data-target="s-pass-len" data-dir="1" aria-label="increase">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+                </button>
+                <button data-target="s-pass-len" data-dir="-1" aria-label="decrease">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="generate-btn" id="genSingleBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--red)"><path d="M4 3l1.2 3L8 7.2 5.2 8.4 4 11.5 2.8 8.4 0 7.2l2.8-1.2L4 3z"/><path d="M19 1l.9 2.3L22 4.2l-2.1.9L19 7.5l-.9-2.4L16 4.2l2.1-.9L19 1z"/><path d="M14.5 2 8 15h4.3L10 22l8.5-13.3H14L16.5 2z"/></svg>
+        GENERATE
+      </button>
+
+      <div class="output-section" id="s-output">
+       <div class="output-inner">
+        <div class="output-head">
+          <div class="output-title-wrap">
+            <div class="output-bar"></div>
+            <div class="output-title">Generated Output</div>
+          </div>
+        </div>
+        <div class="output-card">
+          <div class="output-row">
+            <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3 6.5 12 13l9-6.5"/></svg></div>
+            <div class="row-body">
+              <div class="row-label">Email</div>
+              <div class="row-value" id="s-email-out"></div>
+            </div>
+            <button class="copy-btn" data-copy="s-email-out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-label">COPY</span>
+            </button>
+          </div>
+          <div class="divider-row"></div>
+          <div class="output-row">
+            <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M7 11V7.5a5 5 0 0 1 10 0V11"/><circle cx="12" cy="15.3" r="1.4" fill="currentColor" stroke="none"/><path d="M12 16.7V18.3"/></svg></div>
+            <div class="row-body">
+              <div class="row-label">Password</div>
+              <div class="row-value" id="s-pass-out"></div>
+            </div>
+            <button class="copy-btn" data-copy="s-pass-out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-label">COPY</span>
+            </button>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <!-- BATCH VIEW -->
+    <div data-view="batch">
+      <div class="fields" style="margin-top:22px;">
+        <div class="field-card">
+          <div class="icon-box"><span class="glyph">Aa</span></div>
+          <div class="field-body">
+            <div class="field-label-row">
+              <span class="field-label">Name Pattern</span>
+              <span class="field-counter"><span id="b-name-count">0</span>/20</span>
+            </div>
+            <input class="text-input" id="b-name" maxlength="20" placeholder="e.g., John, Mike, Alex">
+          </div>
+        </div>
+
+        <div class="field-card">
+          <div class="icon-box"><span class="glyph">#</span></div>
+          <div class="field-body">
+            <div class="field-label-row"><span class="field-label">Email Length</span></div>
+            <div class="combo-row">
+              <div class="combo-field"><input id="b-email-len" type="number" value="10" inputmode="numeric"><span class="unit">characters</span></div>
+              <button class="chevron-btn" data-menu="menu-email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="preset-menu" id="menu-email">
+                <button data-set="b-email-len" data-val="8">8</button>
+                <button data-set="b-email-len" data-val="10">10</button>
+                <button data-set="b-email-len" data-val="12">12</button>
+                <button data-set="b-email-len" data-val="16">16</button>
+                <button data-set="b-email-len" data-val="20">20</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M7 11V7.5a5 5 0 0 1 10 0V11"/><circle cx="12" cy="15.3" r="1.4" fill="currentColor" stroke="none"/><path d="M12 16.7V18.3"/></svg>
+          </div>
+          <div class="field-body">
+            <div class="field-label-row"><span class="field-label">Password Length</span></div>
+            <div class="combo-row">
+              <div class="combo-field"><input id="b-pass-len" type="number" value="12" inputmode="numeric"><span class="unit">characters</span></div>
+              <button class="chevron-btn" data-menu="menu-pass">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="preset-menu" id="menu-pass">
+                <button data-set="b-pass-len" data-val="8">8</button>
+                <button data-set="b-pass-len" data-val="12">12</button>
+                <button data-set="b-pass-len" data-val="16">16</button>
+                <button data-set="b-pass-len" data-val="20">20</button>
+                <button data-set="b-pass-len" data-val="24">24</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg>
+          </div>
+          <div class="field-body">
+            <div class="field-label-row"><span class="field-label">Quantity</span></div>
+            <div class="combo-row">
+              <div class="combo-field"><input id="b-qty" type="number" value="10" inputmode="numeric"><span class="unit">items</span></div>
+              <button class="chevron-btn" data-menu="menu-qty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="preset-menu" id="menu-qty">
+                <button data-set="b-qty" data-val="5">5</button>
+                <button data-set="b-qty" data-val="10">10</button>
+                <button data-set="b-qty" data-val="20">20</button>
+                <button data-set="b-qty" data-val="50">50</button>
+                <button data-set="b-qty" data-val="100">100</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="generate-btn" id="genBatchBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--red)"><path d="M4 3l1.2 3L8 7.2 5.2 8.4 4 11.5 2.8 8.4 0 7.2l2.8-1.2L4 3z"/><path d="M19 1l.9 2.3L22 4.2l-2.1.9L19 7.5l-.9-2.4L16 4.2l2.1-.9L19 1z"/><path d="M14.5 2 8 15h4.3L10 22l8.5-13.3H14L16.5 2z"/></svg>
+        GENERATE BATCH
+      </button>
+
+      <div class="output-section" id="b-output">
+       <div class="output-inner">
+        <div class="output-head">
+          <div class="output-title-wrap">
+            <div class="output-bar"></div>
+            <div class="output-title">Generated Output</div>
+          </div>
+          <div class="count-pill"><span id="b-count">10</span> items</div>
+        </div>
+        <div class="output-card">
+          <div class="batch-list" id="batchList"></div>
+          <button class="copy-all-btn" id="copyAllBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            COPY ALL
+          </button>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+</div>
+</div></div>
+</div>

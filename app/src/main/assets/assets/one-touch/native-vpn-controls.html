@@ -1,0 +1,91 @@
+<script id="native-vpn-controls" type="text/plain">
+/* One Touch controls use Dashboard materials; hero and connection logic untouched. */
+.toast{bottom:calc(94px + env(safe-area-inset-bottom,0px));}
+.vpn-body.locked .toast{bottom:calc(24px + env(safe-area-inset-bottom,0px));}
+
+:host{display:block;width:100%;font-family:inherit;}
+.vpn-html{background:#030406;}
+.vpn-body{min-height:0;background:radial-gradient(ellipse at 50% 12%,#18080d66,transparent 45%),#030406;overflow:visible;}
+.app{min-height:0;padding-top:0;padding-bottom:calc(108px + env(safe-area-inset-bottom,0px));}
+.card{border-radius:14px;background:linear-gradient(160deg,#151015,#0b080c);border:1px solid #ffffff12;box-shadow:inset 0 1px 0 #ffffff07,0 8px 22px #0004;transition:transform .18s ease,border-color .25s ease,box-shadow .25s ease;}
+.card-red{background:linear-gradient(160deg,#1b0c10,#0b070a);border-color:#ff22223c;box-shadow:0 0 18px #ff22220c,inset 0 1px 0 #ffffff07;}
+.card::before{left:16%;right:16%;background:linear-gradient(90deg,transparent,#ffffff33,transparent);opacity:.3;}
+.card::after{background:linear-gradient(115deg,transparent,#ffffff12,transparent);transition:transform .8s ease;}
+.card:active{transform:scale(.975);box-shadow:inset 0 1px 0 #ffffff0c,0 0 22px #ff22221b;}
+.icon-sq{border-radius:12px;background:linear-gradient(160deg,#22161a,#110e12);border:1px solid #ffffff10;box-shadow:inset 0 1px 0 #ffffff08,0 3px 8px #0004;}
+.t-title{font-weight:700;letter-spacing:.15em;}
+#selName{font-weight:600;}
+.t-sub{color:#86838c;}
+/* .switch deliberately not re-skinned here: the toggle owns one Engine-language definition inside the One Touch document. */
+.power-core{background:radial-gradient(circle at 35% 24%,#342129 0,#190d13 42%,#090609 100%);border:1.5px solid #ff22226b;box-shadow:0 0 25px #ff222219,inset 0 1px 0 #ffffff14,inset 0 -12px 20px #0009,0 15px 30px #0007;transition:transform .2s ease,border-color .5s ease,box-shadow .5s ease;}
+.power-core::after{content:'';position:absolute;inset:1px;border-radius:50%;background:linear-gradient(135deg,#ffffff0b,transparent 45%);pointer-events:none;}
+.vpn-body[data-state="connected"] .power-core{border-color:#ff44448c;box-shadow:0 0 28px #ff22222b,inset 0 1px 0 #ffffff22,inset 0 -12px 20px #0009,0 15px 30px #0007;}
+.power-core:active{transform:scale(.95);}
+.d-btns button{border-radius:12px;min-height:44px;}
+#dConfirm{background:linear-gradient(180deg,#45131c,#210b11);border:1px solid #ff222270;box-shadow:0 0 16px #ff22221c,inset 0 1px 0 #ffffff16;}
+#dCancel{background:linear-gradient(180deg,#19151d,#0e0c12);box-shadow:inset 0 1px 0 #ffffff0b;}
+#countryCard.open{border-color:#ff222270;}
+@media(hover:hover){.card:hover{border-color:#ff222266;box-shadow:inset 0 1px 0 #ffffff0b,0 12px 24px #0006;}.card:hover::after{transform:translateX(320%) skewX(-18deg);}}
+
+/* Direct Generate component adaptation: geometry, typography, transitions and
+   light-layer construction share the source above; only dark variant materials differ. */
+:is(#opCard,#emCard).vpn-primary-action{
+ --primary-action-border:#57555f;--primary-action-rgb:150,151,166;
+ min-height:60px;line-height:normal;transform:none;text-align:center;
+}
+#emCard.vpn-primary-action{--primary-action-border:#8f3343;--primary-action-rgb:234,12,32;}
+:is(#opCard,#emCard).vpn-primary-action::before,
+:is(#opCard,#emCard).vpn-primary-action::after{content:none;}
+:is(#opCard,#emCard).vpn-primary-action {
+    width:100%;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.012)), #050507;
+    border: 2px solid var(--primary-action-border);
+    border-radius: 17px;
+    padding: 17px;
+    color: #f4f4f5;
+    font-family:var(--u-font);
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:0.04em;
+    cursor:pointer;
+    box-shadow: 0 0 18px rgba(var(--primary-action-rgb),.22), 0 0 46px rgba(var(--primary-action-rgb),.10), inset 0 0 22px rgba(var(--primary-action-rgb),.04);
+    animation: vpnGenerateGlow 2.8s ease-in-out infinite;
+    transition: transform .15s ease, box-shadow .2s ease;
+  }
+@keyframes vpnGenerateGlow {
+    0%,100%{ box-shadow: 0 0 18px rgba(var(--primary-action-rgb),.22), 0 0 46px rgba(var(--primary-action-rgb),.10), inset 0 0 22px rgba(var(--primary-action-rgb),.04); }
+    50%{ box-shadow: 0 0 26px rgba(var(--primary-action-rgb),.34), 0 0 64px rgba(var(--primary-action-rgb),.15), inset 0 0 26px rgba(var(--primary-action-rgb),.065); }
+  }
+:is(#opCard,#emCard).vpn-primary-action:hover { animation-play-state: paused; box-shadow: 0 0 30px rgba(var(--primary-action-rgb),.38), 0 0 70px rgba(var(--primary-action-rgb),.22), inset 0 0 24px rgba(var(--primary-action-rgb),.065); }
+:is(#opCard,#emCard).vpn-primary-action:active { transform: scale(0.98); }
+:is(#opCard,#emCard).vpn-primary-action svg { width:22px; height:22px; flex-shrink:0; }
+
+:is(#opCard,#emCard).vpn-primary-action:hover{transform:none;}
+:is(#opCard,#emCard).vpn-primary-action:active{transform:scale(.98);}
+:is(#opCard,#emCard).vpn-primary-action svg{color:#dedbe3;}
+#emCard.vpn-primary-action svg{color:#e65f73;}
+:is(#opCard,#emCard).vpn-primary-action span{flex:none;}
+/* visible supporting line for the primary action; EMERGENCY STOP deliberately left single-line. */
+#opCard.vpn-primary-action.flash{border-color:#a7a1b2;}
+:is(#opCard,#emCard).vpn-primary-action:focus-visible{outline:2px solid #ea0c20;outline-offset:4px;}
+@media(prefers-reduced-motion:reduce){:is(#opCard,#emCard).vpn-primary-action{animation:none;}}
+
+/* Reserve a feedback lane above the shared nav; final actions stay unobscured. */
+.app{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px));}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px));}
+
+/* Ready is an actionable, stationary control—not a simulated live connection. */
+.vpn-body[data-state="disconnected"] .prings{opacity:.38;}
+.vpn-body[data-state="disconnected"] .wave{opacity:.12;}
+.vpn-body[data-state="disconnected"] .wave .flowline,
+.vpn-body[data-state="disconnected"] .wave .eq{animation-play-state:paused;}
+.vpn-body[data-state="disconnected"] .pc-halo{animation:none;opacity:.18;}
+.vpn-body[data-state="disconnected"] .power-core{border-color:rgba(255,93,115,.42);box-shadow:inset 0 1px 0 #ffffff1c,inset 0 -12px 20px #0009,0 0 24px #ff222215,0 15px 30px #0007;}
+.vpn-body[data-state="disconnected"] .power-core svg{opacity:1;}
+.power-core:disabled{cursor:wait;}
+.power-core:disabled:active{transform:none;}
+.power-core:focus-visible{outline:2px solid var(--red-hi);outline-offset:6px;}
+.prings,.wave{transition:opacity .6s ease;}
+@media(hover:hover){.vpn-body[data-state="disconnected"] .power-core:hover{border-color:rgba(255,107,127,.75);box-shadow:inset 0 1px 0 #ffffff24,inset 0 -12px 20px #0009,0 0 28px #ff22222b,0 15px 30px #0007;}}
+</script>
